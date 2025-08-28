@@ -2,12 +2,12 @@
 <network-security-config>
     <!-- Production configuration -->
     <domain-config cleartextTrafficPermitted="false">
-        <domain includeSubdomains="true">enlightenment.com</domain>
-        <pin-set expiration="2025-01-01">
-            <pin digest="SHA-256">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</pin>
-            <!-- Backup pin -->
-            <pin digest="SHA-256">BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=</pin>
-        </pin-set>
+        <domain includeSubdomains="true">cloud.tencent.com</domain>
+        <domain includeSubdomains="true">googleapis.com</domain>
+        <domain includeSubdomains="true">openai.com</domain>
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
     </domain-config>
     
     <!-- Debug configuration -->

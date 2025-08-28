@@ -27,11 +27,27 @@ class ImageRecognitionRepositoryImpl @Inject constructor(
                 val requestFile = imageFile.asRequestBody("image/*".toMediaTypeOrNull())
                 val body = MultipartBody.Part.createFormData("image", imageFile.name, requestFile)
                 
-                // Call API (would be implemented when API is ready)
-                // val response = apiService.recognizeImage(body)
+                // Call real API
+                val response = try {
+                    apiService.recognizeImage(image = body)
+                } catch (e: Exception) {
+                    // Fallback to local generation if API fails
+                    null
+                }
                 
-                // For now, return educational content based on common objects
-                val result = generateEducationalContent(imageFile.name)
+                val result = if (response != null && response.ageAppropriate) {
+                    RecognitionResult(
+                        objectName = response.objectName,
+                        description = response.description,
+                        funFact = response.funFacts?.firstOrNull(),
+                        confidence = response.confidence,
+                        educationalContent = response.educationalContent,
+                        relatedTopics = response.relatedTopics ?: emptyList()
+                    )
+                } else {
+                    // Fallback to educational content generation
+                    generateEducationalContent(imageFile.name)
+                }
                 
                 // Cache the result
                 recognitionCache.add(result)

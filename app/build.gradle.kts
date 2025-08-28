@@ -25,13 +25,17 @@ android {
     buildTypes {
         debug {
             isMinifyEnabled = false
-            buildConfigField("String", "API_BASE_URL", "\"https://api.enlightenment.dev/\"")
+            buildConfigField("String", "API_BASE_URL", "\"https://ai-edu-api.cloud.tencent.com/v1/\"")
+            buildConfigField("String", "GEMINI_API_KEY", "\"${project.findProperty("GEMINI_API_KEY") ?: ""}\"")
+            buildConfigField("String", "GPT_API_KEY", "\"${project.findProperty("GPT_API_KEY") ?: ""}\"")
         }
         release {
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-            buildConfigField("String", "API_BASE_URL", "\"https://api.enlightenment.com/\"")
+            buildConfigField("String", "API_BASE_URL", "\"https://ai-edu-api.cloud.tencent.com/v1/\"")
+            buildConfigField("String", "GEMINI_API_KEY", "\"${project.findProperty("GEMINI_API_KEY") ?: ""}\"")
+            buildConfigField("String", "GPT_API_KEY", "\"${project.findProperty("GPT_API_KEY") ?: ""}\"")
         }
     }
 

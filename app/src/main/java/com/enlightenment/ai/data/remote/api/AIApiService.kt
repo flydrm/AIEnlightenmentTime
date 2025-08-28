@@ -2,20 +2,32 @@ package com.enlightenment.ai.data.remote.api
 
 import com.enlightenment.ai.data.remote.model.DialogueResponse
 import com.enlightenment.ai.data.remote.model.StoryResponse
-import retrofit2.http.Body
-import retrofit2.http.POST
+import com.enlightenment.ai.data.remote.model.ImageRecognitionResponse
+import okhttp3.MultipartBody
+import retrofit2.http.*
 
 interface AIApiService {
     
-    @POST("api/v1/story/generate")
+    @POST("story/generate")
+    @Headers("Content-Type: application/json")
     suspend fun generateStory(
+        @Header("Authorization") apiKey: String = "Bearer ${AIModelConfig.GEMINI_API_KEY}",
         @Body request: StoryGenerateRequest
     ): StoryResponse
     
-    @POST("api/v1/dialogue/chat")
+    @POST("dialogue/chat")
+    @Headers("Content-Type: application/json")
     suspend fun sendDialogueMessage(
+        @Header("Authorization") apiKey: String = "Bearer ${AIModelConfig.GPT_API_KEY}",
         @Body request: DialogueRequest
     ): DialogueResponse
+    
+    @Multipart
+    @POST("image/recognize")
+    suspend fun recognizeImage(
+        @Header("Authorization") apiKey: String = "Bearer ${AIModelConfig.GEMINI_API_KEY}",
+        @Part image: MultipartBody.Part
+    ): ImageRecognitionResponse
 }
 
 data class StoryGenerateRequest(

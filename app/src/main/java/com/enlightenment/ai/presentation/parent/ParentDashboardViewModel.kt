@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -49,28 +50,55 @@ class ParentDashboardViewModel @Inject constructor(
     }
     
     fun onTimeLimitClick() {
-        // Navigate to time limit settings
+        _uiState.update { currentState ->
+            currentState.copy(
+                navigationEvent = NavigationEvent.TimeLimitSettings
+            )
+        }
     }
     
     fun onContentPreferenceClick() {
-        // Navigate to content preferences
+        _uiState.update { currentState ->
+            currentState.copy(
+                navigationEvent = NavigationEvent.ContentPreferences
+            )
+        }
     }
     
     fun onReportClick() {
-        // Navigate to detailed reports
+        _uiState.update { currentState ->
+            currentState.copy(
+                navigationEvent = NavigationEvent.DetailedReports
+            )
+        }
     }
     
     fun onPrivacyClick() {
-        // Navigate to privacy settings
+        _uiState.update { currentState ->
+            currentState.copy(
+                navigationEvent = NavigationEvent.PrivacySettings
+            )
+        }
     }
     
     fun onSettingsClick() {
-        // Navigate to app settings
+        _uiState.update { currentState ->
+            currentState.copy(
+                navigationEvent = NavigationEvent.AppSettings
+            )
+        }
+    }
+    
+    fun clearNavigationEvent() {
+        _uiState.update { currentState ->
+            currentState.copy(navigationEvent = null)
+        }
     }
 }
 
 data class ParentDashboardUiState(
-    val learningStats: ParentDashboardStats = ParentDashboardStats()
+    val learningStats: ParentDashboardStats = ParentDashboardStats(),
+    val navigationEvent: NavigationEvent? = null
 )
 
 data class ParentDashboardStats(
@@ -79,3 +107,11 @@ data class ParentDashboardStats(
     val streak: Int = 0,
     val todayProgress: Float = 0f
 )
+
+sealed class NavigationEvent {
+    object TimeLimitSettings : NavigationEvent()
+    object ContentPreferences : NavigationEvent()
+    object DetailedReports : NavigationEvent()
+    object PrivacySettings : NavigationEvent()
+    object AppSettings : NavigationEvent()
+}

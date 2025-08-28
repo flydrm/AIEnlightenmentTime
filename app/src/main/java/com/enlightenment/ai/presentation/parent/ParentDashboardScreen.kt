@@ -15,6 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.enlightenment.ai.presentation.theme.CreamBackground
+import android.widget.Toast
+import androidx.compose.ui.platform.LocalContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -23,6 +25,33 @@ fun ParentDashboardScreen(
     viewModel: ParentDashboardViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    
+    // Handle navigation events
+    LaunchedEffect(uiState.navigationEvent) {
+        when (uiState.navigationEvent) {
+            is NavigationEvent.TimeLimitSettings -> {
+                // In real app, navigate to time limit settings screen
+                viewModel.clearNavigationEvent()
+            }
+            is NavigationEvent.ContentPreferences -> {
+                // In real app, navigate to content preferences screen
+                viewModel.clearNavigationEvent()
+            }
+            is NavigationEvent.DetailedReports -> {
+                // In real app, navigate to detailed reports screen
+                viewModel.clearNavigationEvent()
+            }
+            is NavigationEvent.PrivacySettings -> {
+                // In real app, navigate to privacy settings screen
+                viewModel.clearNavigationEvent()
+            }
+            is NavigationEvent.AppSettings -> {
+                // In real app, navigate to app settings screen
+                viewModel.clearNavigationEvent()
+            }
+            null -> {}
+        }
+    }
     
     Scaffold(
         topBar = {

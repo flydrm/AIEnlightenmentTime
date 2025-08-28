@@ -24,32 +24,28 @@ class ParentDashboardViewModel @Inject constructor(
     
     private fun loadStats() {
         viewModelScope.launch {
+            // Get today's data
+            val todayMinutes = learningStatsRepository.getTodayMinutes()
+            val todayStories = learningStatsRepository.getTodayStories()
+            
+            // Observe overall stats
             learningStatsRepository.observeLearningStats().collect { stats ->
                 _uiState.value = _uiState.value.copy(
                     learningStats = ParentDashboardStats(
-                        todayMinutes = calculateTodayMinutes(stats.totalLearningMinutes),
-                        todayStories = calculateTodayStories(stats.totalStoriesCompleted),
+                        todayMinutes = todayMinutes,
+                        todayStories = todayStories,
                         streak = stats.currentStreak,
-                        todayProgress = calculateTodayProgress()
+                        todayProgress = calculateTodayProgress(todayMinutes)
                     )
                 )
             }
         }
     }
     
-    private fun calculateTodayMinutes(totalMinutes: Int): Int {
-        // In real app, would filter by today's date
-        return minOf(totalMinutes, 15) // Mock: max 15 minutes today
-    }
-    
-    private fun calculateTodayStories(totalStories: Int): Int {
-        // In real app, would filter by today's date
-        return minOf(totalStories, 2) // Mock: max 2 stories today
-    }
-    
-    private fun calculateTodayProgress(): Float {
+    private fun calculateTodayProgress(todayMinutes: Int): Float {
         // Target: 15 minutes per day
-        return 0.6f // Mock: 60% complete
+        val targetMinutes = 15f
+        return (todayMinutes / targetMinutes).coerceIn(0f, 1f)
     }
     
     fun onTimeLimitClick() {

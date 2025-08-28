@@ -8,6 +8,8 @@ interface LearningStatsRepository {
     suspend fun getStoriesCompleted(): Int
     suspend fun getTotalLearningDays(): Int
     suspend fun getLastLearningDate(): Long?
+    suspend fun getTodayMinutes(): Int
+    suspend fun getTodayStories(): Int
     fun observeLearningStats(): Flow<LearningStats>
 }
 

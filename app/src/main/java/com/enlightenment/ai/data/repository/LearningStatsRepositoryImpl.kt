@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.map
 import java.io.IOException
 import java.time.LocalDate
 import java.time.ZoneId
+import java.time.temporal.ChronoUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -25,12 +26,26 @@ class LearningStatsRepositoryImpl @Inject constructor(
         private val TOTAL_MINUTES = intPreferencesKey("total_minutes")
         private val LAST_LEARNING_DATE = longPreferencesKey("last_learning_date")
         private val LEARNING_DATES = stringSetPreferencesKey("learning_dates")
+        private val TODAY_MINUTES = intPreferencesKey("today_minutes")
+        private val TODAY_STORIES = intPreferencesKey("today_stories")
+        private val TODAY_DATE = stringPreferencesKey("today_date")
     }
     
     override suspend fun incrementStoriesCompleted() {
         dataStore.edit { preferences ->
             val current = preferences[STORIES_COMPLETED] ?: 0
             preferences[STORIES_COMPLETED] = current + 1
+            
+            // Update today's count
+            val today = LocalDate.now().toString()
+            if (preferences[TODAY_DATE] != today) {
+                preferences[TODAY_DATE] = today
+                preferences[TODAY_STORIES] = 1
+                preferences[TODAY_MINUTES] = 0
+            } else {
+                val todayStories = preferences[TODAY_STORIES] ?: 0
+                preferences[TODAY_STORIES] = todayStories + 1
+            }
         }
     }
     
@@ -40,8 +55,18 @@ class LearningStatsRepositoryImpl @Inject constructor(
             val currentMinutes = preferences[TOTAL_MINUTES] ?: 0
             preferences[TOTAL_MINUTES] = currentMinutes + durationMinutes
             
-            // Update learning dates
+            // Update today's minutes
             val today = LocalDate.now().toString()
+            if (preferences[TODAY_DATE] != today) {
+                preferences[TODAY_DATE] = today
+                preferences[TODAY_MINUTES] = durationMinutes
+                preferences[TODAY_STORIES] = 0
+            } else {
+                val todayMinutes = preferences[TODAY_MINUTES] ?: 0
+                preferences[TODAY_MINUTES] = todayMinutes + durationMinutes
+            }
+            
+            // Update learning dates
             val learningDates = preferences[LEARNING_DATES]?.toMutableSet() ?: mutableSetOf()
             val wasNewDay = !learningDates.contains(today)
             learningDates.add(today)
@@ -70,7 +95,7 @@ class LearningStatsRepositoryImpl @Inject constructor(
                 ZoneId.systemDefault()
             )
             
-            val daysSinceLastLearning = java.time.temporal.ChronoUnit.DAYS.between(
+            val daysSinceLastLearning = ChronoUnit.DAYS.between(
                 lastLearningDate, today
             )
             
@@ -126,5 +151,31 @@ class LearningStatsRepositoryImpl @Inject constructor(
                     lastLearningDate = preferences[LAST_LEARNING_DATE]
                 )
             }
+    }
+    
+    override suspend fun getTodayMinutes(): Int {
+        return dataStore.data.map { preferences ->
+            val today = LocalDate.now().toString()
+            if (preferences[TODAY_DATE] == today) {
+                preferences[TODAY_MINUTES] ?: 0
+            } else {
+                0
+            }
+        }.catch { 
+            emit(0)
+        }.collect { return@collect it }
+    }
+    
+    override suspend fun getTodayStories(): Int {
+        return dataStore.data.map { preferences ->
+            val today = LocalDate.now().toString()
+            if (preferences[TODAY_DATE] == today) {
+                preferences[TODAY_STORIES] ?: 0
+            } else {
+                0
+            }
+        }.catch { 
+            emit(0)
+        }.collect { return@collect it }
     }
 }

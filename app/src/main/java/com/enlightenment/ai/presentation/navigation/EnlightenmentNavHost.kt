@@ -11,6 +11,7 @@ import com.enlightenment.ai.presentation.profile.ProfileScreen
 import com.enlightenment.ai.presentation.camera.CameraScreen
 import com.enlightenment.ai.presentation.parent.ParentLoginScreen
 import com.enlightenment.ai.presentation.parent.ParentDashboardScreen
+import com.enlightenment.ai.presentation.parent.settings.TimeLimitSettingsScreen
 
 @Composable
 fun EnlightenmentNavHost(
@@ -89,6 +90,29 @@ fun EnlightenmentNavHost(
             ParentDashboardScreen(
                 onNavigateBack = {
                     navController.popBackStack()
+                },
+                onNavigateToTimeLimitSettings = {
+                    navController.navigate(Screen.TimeLimitSettings.route)
+                },
+                onNavigateToContentPreferences = {
+                    navController.navigate(Screen.ContentPreferences.route)
+                },
+                onNavigateToDetailedReports = {
+                    navController.navigate(Screen.DetailedReports.route)
+                },
+                onNavigateToPrivacySettings = {
+                    navController.navigate(Screen.PrivacySettings.route)
+                },
+                onNavigateToAppSettings = {
+                    navController.navigate(Screen.AppSettings.route)
+                }
+            )
+        }
+        
+        composable(Screen.TimeLimitSettings.route) {
+            TimeLimitSettingsScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
                 }
             )
         }
@@ -103,4 +127,9 @@ sealed class Screen(val route: String) {
     object Camera : Screen("camera")
     object ParentLogin : Screen("parent_login")
     object ParentDashboard : Screen("parent_dashboard")
+    object TimeLimitSettings : Screen("time_limit_settings")
+    object ContentPreferences : Screen("content_preferences")
+    object DetailedReports : Screen("detailed_reports")
+    object PrivacySettings : Screen("privacy_settings")
+    object AppSettings : Screen("app_settings")
 }

@@ -3,6 +3,7 @@ package com.enlightenment.ai.di
 import android.content.Context
 import androidx.room.Room
 import com.enlightenment.ai.data.local.dao.StoryDao
+import com.enlightenment.ai.data.local.dao.DialogueMessageDao
 import com.enlightenment.ai.data.local.database.AppDatabase
 import dagger.Module
 import dagger.Provides
@@ -32,5 +33,10 @@ object DatabaseModule {
     @Provides
     fun provideStoryDao(database: AppDatabase): StoryDao {
         return database.storyDao()
+    }
+    
+    @Provides
+    fun provideDialogueMessageDao(database: AppDatabase): DialogueMessageDao {
+        return database.dialogueMessageDao()
     }
 }

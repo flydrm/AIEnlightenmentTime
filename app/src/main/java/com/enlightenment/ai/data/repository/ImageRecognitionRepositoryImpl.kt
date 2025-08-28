@@ -72,8 +72,8 @@ class ImageRecognitionRepositoryImpl @Inject constructor(
         }
     
     private fun generateEducationalContent(fileName: String): RecognitionResult {
-        // Generate educational content based on common objects
-        // In production, this would be replaced by actual API response
+        // Fallback educational content when API is unavailable
+        // This provides offline support and ensures children always get educational value
         
         val educationalDatabase = mapOf(
             "toy" to RecognitionResult(

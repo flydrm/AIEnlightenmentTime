@@ -1,5 +1,7 @@
 package com.enlightenment.ai.data.repository
 
+import com.enlightenment.ai.data.local.dao.DialogueMessageDao
+import com.enlightenment.ai.data.local.entity.DialogueMessageEntity
 import com.enlightenment.ai.data.remote.api.AIApiService
 import com.enlightenment.ai.data.remote.api.DialogueContextRequest
 import com.enlightenment.ai.data.remote.api.DialogueRequest
@@ -7,6 +9,8 @@ import com.enlightenment.ai.data.remote.api.MessageHistory
 import com.enlightenment.ai.domain.model.ConversationContext
 import com.enlightenment.ai.domain.model.DialogueMessage
 import com.enlightenment.ai.domain.repository.DialogueRepository
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.UUID
@@ -15,11 +19,10 @@ import javax.inject.Singleton
 
 @Singleton
 class DialogueRepositoryImpl @Inject constructor(
-    private val apiService: AIApiService
+    private val apiService: AIApiService,
+    private val dialogueMessageDao: DialogueMessageDao,
+    private val gson: Gson
 ) : DialogueRepository {
-    
-    // In-memory storage for conversation history (in production, use Room)
-    private val conversationHistory = mutableMapOf<String, MutableList<DialogueMessage>>()
     
     override suspend fun sendMessage(
         message: String,
@@ -33,9 +36,8 @@ class DialogueRepositoryImpl @Inject constructor(
                 isFromUser = true
             )
             
-            // Add to history
-            conversationHistory.getOrPut(context.conversationId) { mutableListOf() }
-                .add(userMessage)
+            // Save to database
+            dialogueMessageDao.insertMessage(userMessage.toEntity(context.conversationId))
             
             // Prepare API request
             val request = DialogueRequest(
@@ -65,8 +67,8 @@ class DialogueRepositoryImpl @Inject constructor(
                 suggestedActions = response.reply.suggestions ?: emptyList()
             )
             
-            // Add to history
-            conversationHistory[context.conversationId]?.add(aiMessage)
+            // Save to database
+            dialogueMessageDao.insertMessage(aiMessage.toEntity(context.conversationId))
             
             Result.success(aiMessage)
         } catch (e: Exception) {
@@ -84,10 +86,37 @@ class DialogueRepositoryImpl @Inject constructor(
     override suspend fun getConversationHistory(
         conversationId: String
     ): List<DialogueMessage> = withContext(Dispatchers.IO) {
-        conversationHistory[conversationId] ?: emptyList()
+        dialogueMessageDao.getConversationHistory(conversationId).map { it.toDomainModel() }
     }
     
     override suspend fun clearConversation(conversationId: String) = withContext(Dispatchers.IO) {
-        conversationHistory.remove(conversationId)
+        dialogueMessageDao.clearConversation(conversationId)
+    }
+    
+    private fun DialogueMessage.toEntity(conversationId: String): DialogueMessageEntity {
+        return DialogueMessageEntity(
+            id = id,
+            conversationId = conversationId,
+            content = content,
+            isFromUser = isFromUser,
+            timestamp = timestamp,
+            emotion = emotion,
+            suggestedActions = if (suggestedActions.isNotEmpty()) {
+                gson.toJson(suggestedActions)
+            } else null
+        )
+    }
+    
+    private fun DialogueMessageEntity.toDomainModel(): DialogueMessage {
+        return DialogueMessage(
+            id = id,
+            content = content,
+            isFromUser = isFromUser,
+            timestamp = timestamp,
+            emotion = emotion,
+            suggestedActions = suggestedActions?.let {
+                gson.fromJson(it, object : TypeToken<List<String>>() {}.type)
+            } ?: emptyList()
+        )
     }
 }

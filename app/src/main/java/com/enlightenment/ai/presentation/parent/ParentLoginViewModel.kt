@@ -33,6 +33,18 @@ class ParentLoginViewModel @Inject constructor() : ViewModel() {
             }
         }
     }
+    
+    fun showPasswordHint() {
+        _uiState.value = ParentLoginUiState.ShowHint("提示：十二加七等于多少？")
+        
+        // Reset to idle after showing hint
+        viewModelScope.launch {
+            delay(3000)
+            if (_uiState.value is ParentLoginUiState.ShowHint) {
+                _uiState.value = ParentLoginUiState.Idle
+            }
+        }
+    }
 }
 
 sealed class ParentLoginUiState {
@@ -40,4 +52,5 @@ sealed class ParentLoginUiState {
     object Loading : ParentLoginUiState()
     object Success : ParentLoginUiState()
     data class Error(val message: String) : ParentLoginUiState()
+    data class ShowHint(val hint: String) : ParentLoginUiState()
 }

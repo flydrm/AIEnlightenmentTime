@@ -9,6 +9,8 @@ import com.enlightenment.ai.presentation.story.StoryScreen
 import com.enlightenment.ai.presentation.dialogue.DialogueScreen
 import com.enlightenment.ai.presentation.profile.ProfileScreen
 import com.enlightenment.ai.presentation.camera.CameraScreen
+import com.enlightenment.ai.presentation.parent.ParentLoginScreen
+import com.enlightenment.ai.presentation.parent.ParentDashboardScreen
 
 @Composable
 fun EnlightenmentNavHost(
@@ -31,6 +33,9 @@ fun EnlightenmentNavHost(
                 },
                 onNavigateToProfile = {
                     navController.navigate(Screen.Profile.route)
+                },
+                onNavigateToParentLogin = {
+                    navController.navigate(Screen.ParentLogin.route)
                 }
             )
         }
@@ -66,6 +71,27 @@ fun EnlightenmentNavHost(
                 }
             )
         }
+        
+        composable(Screen.ParentLogin.route) {
+            ParentLoginScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                },
+                onLoginSuccess = {
+                    navController.navigate(Screen.ParentDashboard.route) {
+                        popUpTo(Screen.ParentLogin.route) { inclusive = true }
+                    }
+                }
+            )
+        }
+        
+        composable(Screen.ParentDashboard.route) {
+            ParentDashboardScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
     }
 }
 
@@ -75,4 +101,6 @@ sealed class Screen(val route: String) {
     object Dialogue : Screen("dialogue")
     object Profile : Screen("profile")
     object Camera : Screen("camera")
+    object ParentLogin : Screen("parent_login")
+    object ParentDashboard : Screen("parent_dashboard")
 }

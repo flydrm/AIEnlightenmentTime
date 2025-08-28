@@ -134,13 +134,24 @@ fun ParentLoginScreen(
                             singleLine = true
                         )
                         
-                        if (uiState is ParentLoginUiState.Error) {
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Text(
-                                text = uiState.message,
-                                color = MaterialTheme.colorScheme.error,
-                                style = MaterialTheme.typography.bodySmall
-                            )
+                        when (uiState) {
+                            is ParentLoginUiState.Error -> {
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Text(
+                                    text = uiState.message,
+                                    color = MaterialTheme.colorScheme.error,
+                                    style = MaterialTheme.typography.bodySmall
+                                )
+                            }
+                            is ParentLoginUiState.ShowHint -> {
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Text(
+                                    text = uiState.hint,
+                                    color = MaterialTheme.colorScheme.primary,
+                                    style = MaterialTheme.typography.bodySmall
+                                )
+                            }
+                            else -> {}
                         }
                         
                         Spacer(modifier = Modifier.height(24.dp))
@@ -162,7 +173,7 @@ fun ParentLoginScreen(
                         
                         Spacer(modifier = Modifier.height(16.dp))
                         
-                        TextButton(onClick = { /* TODO: Forgot password */ }) {
+                        TextButton(onClick = { viewModel.showPasswordHint() }) {
                             Text("忘记密码？")
                         }
                     }

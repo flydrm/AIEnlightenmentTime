@@ -24,6 +24,7 @@ fun HomeScreen(
     onNavigateToDialogue: () -> Unit,
     onNavigateToCamera: () -> Unit,
     onNavigateToProfile: () -> Unit,
+    onNavigateToParentLogin: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -104,7 +105,7 @@ fun HomeScreen(
             
             // Parent entrance
             TextButton(
-                onClick = { /* TODO: Parent login */ },
+                onClick = onNavigateToParentLogin,
                 modifier = Modifier.padding(bottom = 16.dp)
             ) {
                 Text(

@@ -8,6 +8,7 @@ import com.enlightenment.ai.presentation.home.HomeScreen
 import com.enlightenment.ai.presentation.story.StoryScreen
 import com.enlightenment.ai.presentation.dialogue.DialogueScreen
 import com.enlightenment.ai.presentation.profile.ProfileScreen
+import com.enlightenment.ai.presentation.camera.CameraScreen
 
 @Composable
 fun EnlightenmentNavHost(
@@ -24,6 +25,9 @@ fun EnlightenmentNavHost(
                 },
                 onNavigateToDialogue = {
                     navController.navigate(Screen.Dialogue.route)
+                },
+                onNavigateToCamera = {
+                    navController.navigate(Screen.Camera.route)
                 },
                 onNavigateToProfile = {
                     navController.navigate(Screen.Profile.route)
@@ -54,6 +58,14 @@ fun EnlightenmentNavHost(
                 }
             )
         }
+        
+        composable(Screen.Camera.route) {
+            CameraScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
     }
 }
 
@@ -62,4 +74,5 @@ sealed class Screen(val route: String) {
     object Story : Screen("story")
     object Dialogue : Screen("dialogue")
     object Profile : Screen("profile")
+    object Camera : Screen("camera")
 }

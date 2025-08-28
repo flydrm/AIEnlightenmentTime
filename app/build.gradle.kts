@@ -111,6 +111,15 @@ dependencies {
     // Lottie for animations
     implementation("com.airbnb.android:lottie-compose:6.1.0")
     
+    // CameraX
+    implementation("androidx.camera:camera-core:1.3.0")
+    implementation("androidx.camera:camera-camera2:1.3.0")
+    implementation("androidx.camera:camera-lifecycle:1.3.0")
+    implementation("androidx.camera:camera-view:1.3.0")
+    
+    // Permissions
+    implementation("com.google.accompanist:accompanist-permissions:0.32.0")
+    
     // Testing
     testImplementation("junit:junit:4.13.2")
     testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.3")

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.enlightenment.ai.domain.model.Question
 import com.enlightenment.ai.domain.model.Story
 import com.enlightenment.ai.domain.usecase.GenerateStoryUseCase
+import com.enlightenment.ai.presentation.common.TextToSpeechManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class StoryViewModel @Inject constructor(
-    private val generateStoryUseCase: GenerateStoryUseCase
+    private val generateStoryUseCase: GenerateStoryUseCase,
+    private val ttsManager: TextToSpeechManager
 ) : ViewModel() {
     
     private val _uiState = MutableStateFlow<StoryUiState>(StoryUiState.Loading)
@@ -41,7 +43,19 @@ class StoryViewModel @Inject constructor(
     }
     
     fun playStory() {
-        // TODO: Implement TTS
+        val currentState = _uiState.value
+        if (currentState is StoryUiState.Success) {
+            ttsManager.speak(currentState.story.content)
+        }
+    }
+    
+    fun pauseStory() {
+        ttsManager.pause()
+    }
+    
+    override fun onCleared() {
+        super.onCleared()
+        ttsManager.stop()
     }
     
     fun answerQuestion(questionId: String, answerIndex: Int) {

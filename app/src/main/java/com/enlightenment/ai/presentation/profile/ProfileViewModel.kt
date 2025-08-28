@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.enlightenment.ai.domain.model.ChildProfile
 import com.enlightenment.ai.domain.repository.ProfileRepository
+import com.enlightenment.ai.domain.repository.LearningStatsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val profileRepository: ProfileRepository
+    private val profileRepository: ProfileRepository,
+    private val learningStatsRepository: LearningStatsRepository
 ) : ViewModel() {
     
     private val _uiState = MutableStateFlow<ProfileUiState>(ProfileUiState.Loading)
@@ -54,15 +56,29 @@ class ProfileViewModel @Inject constructor(
         }
     }
     
-    private fun ChildProfile.toDisplayModel(): ProfileDisplayModel {
+    private suspend fun ChildProfile.toDisplayModel(): ProfileDisplayModel {
+        val stats = learningStatsRepository.observeLearningStats()
+            .collect { learningStats ->
+                return@collect ProfileDisplayModel(
+                    id = id,
+                    name = name,
+                    age = age,
+                    interests = interests,
+                    learningLevel = learningLevel.toDisplayString(),
+                    daysLearned = learningStats.totalLearningDays,
+                    storiesCompleted = learningStats.totalStoriesCompleted
+                )
+            }
+        
+        // Fallback if flow collection fails
         return ProfileDisplayModel(
             id = id,
             name = name,
             age = age,
             interests = interests,
             learningLevel = learningLevel.toDisplayString(),
-            daysLearned = 1, // TODO: Calculate from actual data
-            storiesCompleted = 0 // TODO: Calculate from actual data
+            daysLearned = 0,
+            storiesCompleted = 0
         )
     }
     

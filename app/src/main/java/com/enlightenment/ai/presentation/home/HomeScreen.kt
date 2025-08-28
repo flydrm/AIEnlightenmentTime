@@ -22,6 +22,7 @@ import com.enlightenment.ai.presentation.theme.*
 fun HomeScreen(
     onNavigateToStory: () -> Unit,
     onNavigateToDialogue: () -> Unit,
+    onNavigateToCamera: () -> Unit,
     onNavigateToProfile: () -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
@@ -86,7 +87,7 @@ fun HomeScreen(
                         emoji = "📸",
                         backgroundColor = SunYellow.copy(alpha = 0.3f),
                         modifier = Modifier.weight(1f),
-                        onClick = { /* TODO: Implement camera */ }
+                        onClick = onNavigateToCamera
                     )
                     
                     FunctionCard(

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- Production configuration -->
+    <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">enlightenment.com</domain>
+        <pin-set expiration="2025-01-01">
+            <pin digest="SHA-256">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</pin>
+            <!-- Backup pin -->
+            <pin digest="SHA-256">BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=</pin>
+        </pin-set>
+    </domain-config>
+    
+    <!-- Debug configuration -->
+    <debug-overrides>
+        <trust-anchors>
+            <!-- Trust user-installed CAs for debugging -->
+            <certificates src="user" />
+        </trust-anchors>
+    </debug-overrides>
+</network-security-config>

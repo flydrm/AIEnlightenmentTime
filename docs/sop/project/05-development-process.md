@@ -136,9 +136,42 @@ hotfix/api-timeout
 
 ### 3.2 编码实践
 
-#### Clean Architecture实现
+#### 🔴 极其重要：中文注释是必需的，不是可选的！
+
+> **为什么中文注释如此重要？**
+> 1. **降低维护成本**：新人能快速理解业务逻辑
+> 2. **减少沟通成本**：代码即文档，减少反复询问
+> 3. **提高开发效率**：二次开发时能快速定位和修改
+> 4. **保证功能正确**：清晰的注释避免理解偏差导致的bug
+> 5. **知识传承**：即使人员变动，业务知识得以保留
+
+#### 必须添加注释的场景
+1. **复杂业务逻辑**：超过3行的业务处理
+2. **算法实现**：任何算法都要说明思路
+3. **交互流程**：UI交互的完整流程
+4. **异常处理**：为什么这样处理异常
+5. **性能优化**：优化的原因和效果
+6. **临时方案**：为什么采用临时方案
+
+#### Clean Architecture实现（带完整注释）
 ```kotlin
-// Domain层 - 纯Kotlin，无Android依赖
+/**
+ * 领域层 - 故事实体
+ * 
+ * 说明：
+ * 代表一个AI生成的儿童故事，包含故事内容和配套问题
+ * 
+ * 字段说明：
+ * - id: 唯一标识，用于缓存和历史记录
+ * - title: 故事标题，展示在列表中
+ * - content: 故事正文，300-500字的儿童故事
+ * - questions: 配套问题，用于检验理解程度
+ * 
+ * 使用场景：
+ * 1. 故事列表展示
+ * 2. 故事详情页
+ * 3. 问答互动页
+ */
 data class Story(
     val id: String,
     val title: String,
@@ -146,7 +179,34 @@ data class Story(
     val questions: List<Question>
 )
 
+/**
+ * 领域层 - 故事仓库接口
+ * 
+ * 职责：
+ * 定义故事相关的业务操作，不关心具体实现
+ * 
+ * 设计原则：
+ * - 接口隔离：只定义必要的方法
+ * - 依赖倒置：上层不依赖具体实现
+ * 
+ * 实现要求：
+ * 1. 必须处理网络异常
+ * 2. 必须实现降级策略
+ * 3. 必须进行内容过滤
+ */
 interface StoryRepository {
+    /**
+     * 生成AI故事
+     * 
+     * @param topic 故事主题（如：恐龙、公主、太空等）
+     * @return 成功返回Story对象，失败返回具体错误
+     * 
+     * 实现注意：
+     * - 调用AI服务前检查网络
+     * - 设置合理的超时时间（建议30秒）
+     * - 失败时返回缓存内容
+     * - 成功后更新本地缓存
+     */
     suspend fun generateStory(topic: String): Result<Story>
 }
 
@@ -190,36 +250,115 @@ class StoryRepositoryImpl @Inject constructor(
     }
 }
 
-// Presentation层 - Android相关
+/**
+ * 表现层 - 故事功能ViewModel
+ * 
+ * 职责说明：
+ * 1. 管理故事界面的UI状态
+ * 2. 协调用户操作和业务逻辑
+ * 3. 处理异步操作和生命周期
+ * 
+ * 状态管理：
+ * - 使用StateFlow保证UI状态的一致性
+ * - 所有状态更新都是原子操作
+ * - 支持配置变更（如屏幕旋转）
+ * 
+ * 错误处理策略：
+ * - 网络错误：显示"网络不好，请稍后再试"
+ * - 服务器错误：显示"服务器开小差了"
+ * - 未知错误：显示通用错误信息
+ * 
+ * @property generateStoryUseCase 故事生成用例，处理业务逻辑
+ * 
+ * 二次开发指南：
+ * - 添加新状态：在StoryUiState中添加字段
+ * - 添加新功能：创建新的public方法
+ * - 修改错误提示：在handleError方法中调整
+ */
 @HiltViewModel
 class StoryViewModel @Inject constructor(
     private val generateStoryUseCase: GenerateStoryUseCase
 ) : ViewModel() {
     
+    // UI状态管理 - 使用StateFlow确保线程安全
     private val _uiState = MutableStateFlow(StoryUiState())
     val uiState: StateFlow<StoryUiState> = _uiState.asStateFlow()
     
+    /**
+     * 生成AI故事
+     * 
+     * 用户流程：
+     * 1. 用户输入故事主题
+     * 2. 点击"生成故事"按钮
+     * 3. 显示加载动画
+     * 4. 成功后显示故事内容
+     * 5. 失败后显示错误提示
+     * 
+     * @param topic 用户输入的故事主题
+     * 
+     * 注意事项：
+     * - 空主题会被UseCase层拦截
+     * - 加载中禁用生成按钮避免重复请求
+     * - 错误信息需要用户友好
+     */
     fun generateStory(topic: String) {
+        // 在协程作用域内执行，自动处理取消
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true) }
+            // Step 1: 更新为加载状态
+            _uiState.update { currentState ->
+                currentState.copy(
+                    isLoading = true,
+                    error = null  // 清除之前的错误
+                )
+            }
             
+            // Step 2: 调用业务逻辑生成故事
             generateStoryUseCase(topic)
                 .onSuccess { story ->
-                    _uiState.update { 
-                        it.copy(
+                    // Step 3a: 成功 - 更新故事内容
+                    _uiState.update { currentState ->
+                        currentState.copy(
                             isLoading = false,
-                            story = story
+                            story = story,
+                            // 记录生成历史，用于统计
+                            generatedCount = currentState.generatedCount + 1
                         )
                     }
+                    
+                    // 发送统计事件（如果集成了统计SDK）
+                    logStoryGenerated(topic, story.id)
                 }
                 .onFailure { error ->
-                    _uiState.update {
-                        it.copy(
+                    // Step 3b: 失败 - 显示错误信息
+                    _uiState.update { currentState ->
+                        currentState.copy(
                             isLoading = false,
-                            error = error.message
+                            error = getUserFriendlyError(error)
                         )
                     }
+                    
+                    // 记录错误日志，方便排查
+                    Timber.e(error, "故事生成失败: $topic")
                 }
+        }
+    }
+    
+    /**
+     * 将异常转换为用户友好的错误信息
+     * 
+     * 转换规则：
+     * - 网络异常 → "网络不太好"
+     * - 服务器异常 → "服务器开小差"
+     * - 其他异常 → 通用提示
+     * 
+     * 二次开发：可以根据需要添加更多错误类型
+     */
+    private fun getUserFriendlyError(error: Throwable): String {
+        return when (error) {
+            is NetworkException -> "网络不太好，请检查网络后再试"
+            is ServerException -> "服务器开小差了，请稍后再试"
+            is ContentFilterException -> "这个主题不太适合，换一个试试吧"
+            else -> "出了点小问题，请稍后再试"
         }
     }
 }

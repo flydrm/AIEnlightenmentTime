@@ -174,46 +174,104 @@ object Radius {
 }
 ```
 
-#### 3.3 组件设计
+#### 3.3 组件设计 【重要：必须包含详细交互注释】
 ```kotlin
-// 儿童友好的按钮
+/**
+ * 儿童友好的按钮组件
+ * 
+ * 设计理念：
+ * 1. 大尺寸设计（64dp高）适合儿童小手操作
+ * 2. 圆角设计（32dp）避免尖锐感，更亲和
+ * 3. 明显阴影（8dp）增强立体感和可点击性
+ * 
+ * 交互说明：
+ * - 点击时阴影从8dp降到4dp，产生按下效果
+ * - 支持图标+文字组合，提高识别度
+ * - 触摸反馈包括视觉（阴影变化）和触觉（轻微震动）
+ * 
+ * 使用场景：
+ * - 主要操作按钮（如"开始游戏"、"生成故事"）
+ * - 导航按钮（如"返回首页"）
+ * - 确认操作（如"完成"、"提交"）
+ * 
+ * @param text 按钮文字，建议2-4个字
+ * @param onClick 点击回调
+ * @param icon 可选图标，增强视觉引导
+ * 
+ * 二次开发注意：
+ * - 修改颜色请同时考虑深色模式适配
+ * - 调整尺寸需要保证最小可触摸区域48dp
+ * - 添加动画效果注意性能影响
+ */
 @Composable
 fun KidButton(
     text: String,
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
-    icon: ImageVector? = null
+    icon: ImageVector? = null,
+    enabled: Boolean = true
 ) {
+    // 震动反馈管理
+    val haptic = LocalHapticFeedback.current
+    
     Button(
-        onClick = onClick,
+        onClick = {
+            // 提供触觉反馈，增强交互感
+            haptic.performHapticFeedback(HapticFeedbackType.LongPress)
+            onClick()
+        },
         modifier = modifier
-            .height(64.dp)  // 大尺寸
+            .height(64.dp)  // 大尺寸：适合3-6岁儿童
             .fillMaxWidth()
             .padding(horizontal = 16.dp),
-        shape = RoundedCornerShape(32.dp),  // 圆角
+        enabled = enabled,
+        shape = RoundedCornerShape(32.dp),  // 圆角：亲和力
         colors = ButtonDefaults.buttonColors(
-            containerColor = ColorPalette.Primary
+            containerColor = ColorPalette.Primary,
+            disabledContainerColor = ColorPalette.Primary.copy(alpha = 0.5f)
         ),
         elevation = ButtonDefaults.buttonElevation(
-            defaultElevation = 8.dp,  // 明显阴影
-            pressedElevation = 4.dp
+            defaultElevation = 8.dp,  // 默认阴影：立体感
+            pressedElevation = 4.dp,  // 按下阴影：反馈感
+            disabledElevation = 0.dp  // 禁用无阴影
         )
     ) {
+        // 图标部分（可选）
         icon?.let {
             Icon(
                 imageVector = it,
-                contentDescription = null,
-                modifier = Modifier.size(28.dp)
+                contentDescription = null,  // 装饰性图标无需描述
+                modifier = Modifier.size(28.dp),
+                tint = Color.White
             )
             Spacer(modifier = Modifier.width(12.dp))
         }
+        
+        // 文字部分
         Text(
             text = text,
             style = Typography.Button,
-            color = Color.White
+            color = if (enabled) Color.White else Color.White.copy(alpha = 0.7f)
         )
     }
 }
+
+/**
+ * 使用示例：
+ * 
+ * // 基础用法
+ * KidButton(
+ *     text = "开始",
+ *     onClick = { startGame() }
+ * )
+ * 
+ * // 带图标用法
+ * KidButton(
+ *     text = "拍照",
+ *     icon = Icons.Default.Camera,
+ *     onClick = { openCamera() }
+ * )
+ */
 ```
 
 ### 4. 交互设计

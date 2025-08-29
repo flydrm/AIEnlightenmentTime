@@ -109,10 +109,53 @@
 - 性能验收标准
 - 用户体验标准
 
-## 5. 相关方
+## 5. 技术注释要求 【重要】
+- 所有复杂逻辑必须有中文注释
+- 交互流程需要详细说明
+- 关键算法要有实现思路
+- 为二次开发预留说明
+
+## 6. 相关方
 - 产品负责人
 - 技术负责人
 - 设计负责人
+```
+
+### 4.2 注释规范要求
+
+#### 🔴 极其重要：中文注释规范
+```kotlin
+/**
+ * 故事生成功能的核心用例
+ * 
+ * 功能说明：
+ * 1. 接收用户输入的故事主题
+ * 2. 调用AI服务生成个性化故事
+ * 3. 失败时自动降级到本地缓存
+ * 
+ * 注意事项：
+ * - AI服务可能超时，需要设置30秒超时
+ * - 本地缓存需要定期更新
+ * - 生成的故事需要内容过滤
+ * 
+ * @param topic 故事主题，如"恐龙"、"太空"等
+ * @return 生成的故事对象，包含标题、内容和问题
+ * 
+ * 后续开发注意：
+ * - 如需添加新的AI模型，在AIModelConfig中配置
+ * - 缓存策略可在StoryRepositoryImpl中调整
+ */
+class GenerateStoryUseCase @Inject constructor(
+    private val repository: StoryRepository
+) {
+    suspend operator fun invoke(topic: String): Result<Story> {
+        // 验证输入合法性
+        require(topic.isNotBlank()) { "故事主题不能为空" }
+        
+        // 调用仓库层生成故事
+        return repository.generateStory(topic)
+    }
+}
 ```
 
 ### 5. 需求评审

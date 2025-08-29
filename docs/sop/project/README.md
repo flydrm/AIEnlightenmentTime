@@ -17,6 +17,7 @@ docs/sop/project/
 ├── 06-code-review.md                  # 代码审查SOP
 ├── 07-testing-strategy.md             # 测试策略SOP
 ├── 08-release-process.md              # 发布流程SOP
+├── 09-comment-standards.md            # 🔴 中文注释规范【极其重要】
 ├── templates/                          # 各阶段模板
 │   ├── requirements-template.md       # 需求文档模板
 │   ├── architecture-template.md       # 架构文档模板
@@ -45,6 +46,14 @@ graph LR
 ```
 
 ## 核心原则
+
+### 🔴 0. 代码必须有详细的中文注释【最高优先级】
+- **所有类都必须有完整的功能说明**
+- **复杂方法都必须有详细的流程注释**
+- **业务逻辑都必须有清晰的解释**
+- **交互流程都必须有步骤说明**
+- **为二次开发提供充分的指导**
+- 详见：[中文注释规范](./09-comment-standards.md)
 
 ### 1. 用户价值优先
 - 每个功能都要有明确的用户价值

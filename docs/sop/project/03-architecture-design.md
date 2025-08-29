@@ -222,6 +222,100 @@ com.company.app/
     └── module/
 ```
 
+#### 5.1.1 🔴 关键：架构层级注释规范
+
+```kotlin
+/**
+ * 数据层 - AI故事仓库实现
+ * 
+ * 架构职责：
+ * 1. 实现Domain层定义的StoryRepository接口
+ * 2. 协调远程API和本地缓存
+ * 3. 处理数据转换和错误处理
+ * 
+ * 核心流程：
+ * 1. 优先调用远程AI服务生成故事
+ * 2. 失败时自动降级到本地缓存
+ * 3. 成功后更新本地缓存供离线使用
+ * 
+ * 依赖关系：
+ * - StoryApiService: 远程API调用
+ * - StoryDao: 本地数据库访问
+ * - NetworkRetryPolicy: 网络重试策略
+ * 
+ * 二次开发指南：
+ * - 添加新的AI模型：修改AIModelConfig配置
+ * - 调整缓存策略：修改CACHE_DURATION常量
+ * - 自定义重试逻辑：继承NetworkRetryPolicy
+ */
+@Singleton
+class StoryRepositoryImpl @Inject constructor(
+    private val apiService: StoryApiService,
+    private val storyDao: StoryDao,
+    private val retryPolicy: NetworkRetryPolicy
+) : StoryRepository {
+    
+    companion object {
+        // 缓存有效期：7天
+        private const val CACHE_DURATION = 7 * 24 * 60 * 60 * 1000L
+    }
+    
+    override suspend fun generateStory(topic: String): Result<Story> {
+        return try {
+            // Step 1: 尝试从远程生成新故事
+            val story = retryPolicy.executeWithRetry {
+                apiService.generateStory(
+                    StoryRequest(
+                        topic = topic,
+                        // 根据用户年龄调整故事复杂度
+                        complexity = getComplexityByAge(),
+                        // 故事长度：300-500字
+                        length = "medium"
+                    )
+                )
+            }.toDomainModel()
+            
+            // Step 2: 保存到本地缓存
+            storyDao.insertStory(story.toEntity())
+            
+            // Step 3: 清理过期缓存
+            cleanExpiredCache()
+            
+            Result.success(story)
+        } catch (e: Exception) {
+            // Step 4: 失败时尝试返回本地缓存
+            handleGenerationError(e, topic)
+        }
+    }
+    
+    /**
+     * 处理故事生成失败
+     * 
+     * 降级策略：
+     * 1. 优先返回相同主题的缓存故事
+     * 2. 如果没有，返回任意缓存故事
+     * 3. 都没有则返回失败
+     */
+    private suspend fun handleGenerationError(
+        error: Exception,
+        topic: String
+    ): Result<Story> {
+        // 记录错误日志，方便问题排查
+        Timber.e(error, "故事生成失败，尝试使用缓存")
+        
+        // 尝试获取相同主题的故事
+        val cachedStory = storyDao.getStoryByTopic(topic)
+            ?: storyDao.getRandomStory()
+            
+        return if (cachedStory != null) {
+            Result.success(cachedStory.toDomainModel())
+        } else {
+            Result.failure(error)
+        }
+    }
+}
+```
+
 #### 5.2 命名规范
 ```kotlin
 // 类命名

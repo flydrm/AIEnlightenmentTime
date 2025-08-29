@@ -1,0 +1,171 @@
+{
+  "success": false,
+  "stats": {
+    "functions": 134,
+    "screens": 0,
+    "navigations": 0
+  },
+  "issues": {
+    "blocker": 2,
+    "critical": 13,
+    "major": 7,
+    "minor": 0,
+    "total": 22
+  },
+  "details": [
+    {
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/domain/repository/LearningStatsRepository.kt",
+      "type": "empty_function",
+      "desc": "\u51fd\u6570 getStoriesCompleted \u662f\u7a7a\u5b9e\u73b0",
+      "level": "CRITICAL",
+      "fix": "\u6dfb\u52a0\u5b9e\u9645\u7684\u5b9e\u73b0\u903b\u8f91"
+    },
+    {
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/presentation/parent/settings/DetailedReportsViewModel.kt",
+      "type": "empty_function",
+      "desc": "\u51fd\u6570 dailyMinutesKey \u662f\u7a7a\u5b9e\u73b0",
+      "level": "CRITICAL",
+      "fix": "\u6dfb\u52a0\u5b9e\u9645\u7684\u5b9e\u73b0\u903b\u8f91"
+    },
+    {
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/presentation/parent/settings/DetailedReportsViewModel.kt",
+      "type": "empty_function",
+      "desc": "\u51fd\u6570 dailyStoriesKey \u662f\u7a7a\u5b9e\u73b0",
+      "level": "CRITICAL",
+      "fix": "\u6dfb\u52a0\u5b9e\u9645\u7684\u5b9e\u73b0\u903b\u8f91"
+    },
+    {
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/presentation/parent/settings/DetailedReportsViewModel.kt",
+      "type": "empty_function",
+      "desc": "\u51fd\u6570 storyThemeKey \u662f\u7a7a\u5b9e\u73b0",
+      "level": "CRITICAL",
+      "fix": "\u6dfb\u52a0\u5b9e\u9645\u7684\u5b9e\u73b0\u903b\u8f91"
+    },
+    {
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/presentation/parent/settings/AppSettingsViewModel.kt",
+      "type": "missing_ui_update",
+      "desc": "checkLatestVersionFromServer \u8c03\u7528API\u4f46\u672a\u66f4\u65b0UI\u72b6\u6001",
+      "level": "MAJOR",
+      "fix": "\u6dfb\u52a0 _state.value = ... \u66f4\u65b0UI"
+    },
+    {
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/presentation/parent/settings/AppSettingsViewModel.kt",
+      "type": "missing_error_handling",
+      "desc": "checkLatestVersionFromServer \u7f3a\u5c11\u9519\u8bef\u5904\u7406",
+      "level": "MAJOR",
+      "fix": "\u6dfb\u52a0 try-catch \u6216 .onFailure"
+    },
+    {
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/presentation/camera/CameraScreen.kt",
+      "type": "empty_function",
+      "desc": "\u51fd\u6570 onError \u662f\u7a7a\u5b9e\u73b0",
+      "level": "CRITICAL",
+      "fix": "\u6dfb\u52a0\u5b9e\u9645\u7684\u5b9e\u73b0\u903b\u8f91"
+    },
+    {
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/data/local/dao/DialogueMessageDao.kt",
+      "type": "empty_function",
+      "desc": "\u51fd\u6570 getConversationHistory \u662f\u7a7a\u5b9e\u73b0",
+      "level": "CRITICAL",
+      "fix": "\u6dfb\u52a0\u5b9e\u9645\u7684\u5b9e\u73b0\u903b\u8f91"
+    },
+    {
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/data/local/dao/StoryDao.kt",
+      "type": "empty_function",
+      "desc": "\u51fd\u6570 getRecentStories \u662f\u7a7a\u5b9e\u73b0",
+      "level": "CRITICAL",
+      "fix": "\u6dfb\u52a0\u5b9e\u9645\u7684\u5b9e\u73b0\u903b\u8f91"
+    },
+    {
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/data/repository/StoryRepositoryImpl.kt",
+      "type": "todo_marker",
+      "desc": "\u51fd\u6570 getStoryById \u5305\u542bTODO\u6807\u8bb0",
+      "level": "MAJOR",
+      "fix": "\u5b8c\u6210TODO\u9879"
+    },
+    {
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/data/repository/StoryRepositoryImpl.kt",
+      "type": "empty_function",
+      "desc": "\u51fd\u6570 saveStory \u662f\u7a7a\u5b9e\u73b0",
+      "level": "CRITICAL",
+      "fix": "\u6dfb\u52a0\u5b9e\u9645\u7684\u5b9e\u73b0\u903b\u8f91"
+    },
+    {
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/data/repository/StoryRepositoryImpl.kt",
+      "type": "todo_marker",
+      "desc": "\u51fd\u6570 getRecentStories \u5305\u542bTODO\u6807\u8bb0",
+      "level": "MAJOR",
+      "fix": "\u5b8c\u6210TODO\u9879"
+    },
+    {
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/data/repository/StoryRepositoryImpl.kt",
+      "type": "todo_marker",
+      "desc": "\u51fd\u6570 getCachedStories \u5305\u542bTODO\u6807\u8bb0",
+      "level": "MAJOR",
+      "fix": "\u5b8c\u6210TODO\u9879"
+    },
+    {
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/data/repository/DialogueRepositoryImpl.kt",
+      "type": "todo_marker",
+      "desc": "\u51fd\u6570 getConversationHistory \u5305\u542bTODO\u6807\u8bb0",
+      "level": "MAJOR",
+      "fix": "\u5b8c\u6210TODO\u9879"
+    },
+    {
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/data/repository/DialogueRepositoryImpl.kt",
+      "type": "empty_function",
+      "desc": "\u51fd\u6570 clearConversation \u662f\u7a7a\u5b9e\u73b0",
+      "level": "CRITICAL",
+      "fix": "\u6dfb\u52a0\u5b9e\u9645\u7684\u5b9e\u73b0\u903b\u8f91"
+    },
+    {
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/data/repository/LearningStatsRepositoryImpl.kt",
+      "type": "missing_persistence",
+      "desc": "updateStreak \u58f0\u79f0\u4fdd\u5b58\u4f46\u672a\u8c03\u7528\u6301\u4e45\u5316",
+      "level": "CRITICAL",
+      "fix": "\u8c03\u7528DAO\u6216DataStore\u4fdd\u5b58\u6570\u636e"
+    },
+    {
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/data/repository/ProfileRepositoryImpl.kt",
+      "type": "missing_persistence",
+      "desc": "updateInterests \u58f0\u79f0\u4fdd\u5b58\u4f46\u672a\u8c03\u7528\u6301\u4e45\u5316",
+      "level": "CRITICAL",
+      "fix": "\u8c03\u7528DAO\u6216DataStore\u4fdd\u5b58\u6570\u636e"
+    },
+    {
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/data/repository/ProfileRepositoryImpl.kt",
+      "type": "missing_persistence",
+      "desc": "updateLearningProgress \u58f0\u79f0\u4fdd\u5b58\u4f46\u672a\u8c03\u7528\u6301\u4e45\u5316",
+      "level": "CRITICAL",
+      "fix": "\u8c03\u7528DAO\u6216DataStore\u4fdd\u5b58\u6570\u636e"
+    },
+    {
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/data/repository/StoryRepositoryImpl.kt",
+      "type": "missing_persistence",
+      "desc": "saveStory \u58f0\u79f0\u4fdd\u5b58\u4f46\u672a\u8c03\u7528\u6301\u4e45\u5316",
+      "level": "CRITICAL",
+      "fix": "\u8c03\u7528DAO\u6216DataStore\u4fdd\u5b58\u6570\u636e"
+    },
+    {
+      "file": "UserFlow",
+      "type": "incomplete_flow",
+      "desc": "\u7528\u6237\u6d41\u7a0b '\u6545\u4e8b\u751f\u6210' \u7f3a\u5c11: ['StoryScreen']",
+      "level": "BLOCKER",
+      "fix": "\u5b9e\u73b0\u7f3a\u5931\u7684\u7ec4\u4ef6"
+    },
+    {
+      "file": "UserFlow",
+      "type": "incomplete_flow",
+      "desc": "\u7528\u6237\u6d41\u7a0b '\u5bb6\u957f\u767b\u5f55' \u7f3a\u5c11: ['ParentLoginScreen']",
+      "level": "BLOCKER",
+      "fix": "\u5b9e\u73b0\u7f3a\u5931\u7684\u7ec4\u4ef6"
+    },
+    {
+      "file": "DependencyInjection",
+      "type": "di_imbalance",
+      "desc": "\u4f9d\u8d56\u6ce8\u5165\u53ef\u80fd\u4e0d\u5b8c\u6574 (@Inject: 107, @Provides: 26)",
+      "level": "MAJOR",
+      "fix": "\u68c0\u67e5DI\u6a21\u5757\u662f\u5426\u5b8c\u6574"
+    }
+  ]
+}

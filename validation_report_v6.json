@@ -1,0 +1,280 @@
+{
+  "version": "6.0",
+  "timestamp": "2025-08-29T02:03:13.151759",
+  "health_score": 49.55,
+  "health_dimensions": {
+    "项目管理": 70.0,
+    "架构设计": 95.0,
+    "开发实现": 0,
+    "质量保证": 10.0,
+    "用户体验": 98.0
+  },
+  "can_release": false,
+  "statistics": {
+    "total_issues": 65,
+    "by_level": {
+      "MAJOR": 23,
+      "CRITICAL": 38,
+      "MINOR": 4,
+      "SHOWSTOPPER": 0,
+      "SUGGESTION": 0
+    },
+    "by_perspective": {
+      "项目管理": {
+        "MAJOR": 4,
+        "CRITICAL": 1,
+        "SHOWSTOPPER": 0
+      },
+      "架构设计": {
+        "MAJOR": 1,
+        "SHOWSTOPPER": 0,
+        "CRITICAL": 0
+      },
+      "开发实现": {
+        "MAJOR": 2,
+        "CRITICAL": 36,
+        "MINOR": 3,
+        "SHOWSTOPPER": 0
+      },
+      "质量保证": {
+        "CRITICAL": 1,
+        "MAJOR": 16,
+        "SHOWSTOPPER": 0
+      },
+      "用户体验": {
+        "MINOR": 1,
+        "SHOWSTOPPER": 0,
+        "CRITICAL": 0
+      }
+    }
+  },
+  "critical_issues": [
+    {
+      "perspective": "项目管理",
+      "category": "进度风险",
+      "description": "Camera功能可能未完全实现",
+      "level": "CRITICAL",
+      "impact": "核心功能缺失",
+      "solution": "完成Camera功能的所有组件",
+      "effort": "高",
+      "file": "",
+      "line": 0
+    },
+    {
+      "perspective": "开发实现",
+      "category": "错误处理缺失",
+      "description": "ProfileRepository.kt缺少网络请求错误处理",
+      "level": "CRITICAL",
+      "impact": "应用可能崩溃",
+      "solution": "添加try-catch或错误回调",
+      "effort": "低",
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/domain/repository/ProfileRepository.kt",
+      "line": 0
+    },
+    {
+      "perspective": "开发实现",
+      "category": "错误处理缺失",
+      "description": "StoryRepository.kt缺少网络请求错误处理",
+      "level": "CRITICAL",
+      "impact": "应用可能崩溃",
+      "solution": "添加try-catch或错误回调",
+      "effort": "低",
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/domain/repository/StoryRepository.kt",
+      "line": 0
+    },
+    {
+      "perspective": "开发实现",
+      "category": "错误处理缺失",
+      "description": "LearningStatsRepository.kt缺少网络请求错误处理",
+      "level": "CRITICAL",
+      "impact": "应用可能崩溃",
+      "solution": "添加try-catch或错误回调",
+      "effort": "低",
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/domain/repository/LearningStatsRepository.kt",
+      "line": 0
+    },
+    {
+      "perspective": "开发实现",
+      "category": "错误处理缺失",
+      "description": "DialogueRepository.kt缺少网络请求错误处理",
+      "level": "CRITICAL",
+      "impact": "应用可能崩溃",
+      "solution": "添加try-catch或错误回调",
+      "effort": "低",
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/domain/repository/DialogueRepository.kt",
+      "line": 0
+    },
+    {
+      "perspective": "开发实现",
+      "category": "错误处理缺失",
+      "description": "ImageRecognitionRepository.kt缺少网络请求错误处理",
+      "level": "CRITICAL",
+      "impact": "应用可能崩溃",
+      "solution": "添加try-catch或错误回调",
+      "effort": "低",
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/domain/repository/ImageRecognitionRepository.kt",
+      "line": 0
+    },
+    {
+      "perspective": "开发实现",
+      "category": "错误处理缺失",
+      "description": "ParentDashboardViewModel.kt缺少网络请求错误处理",
+      "level": "CRITICAL",
+      "impact": "应用可能崩溃",
+      "solution": "添加try-catch或错误回调",
+      "effort": "低",
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/presentation/parent/ParentDashboardViewModel.kt",
+      "line": 0
+    },
+    {
+      "perspective": "开发实现",
+      "category": "错误处理缺失",
+      "description": "ParentLoginViewModel.kt缺少网络请求错误处理",
+      "level": "CRITICAL",
+      "impact": "应用可能崩溃",
+      "solution": "添加try-catch或错误回调",
+      "effort": "低",
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/presentation/parent/ParentLoginViewModel.kt",
+      "line": 0
+    },
+    {
+      "perspective": "开发实现",
+      "category": "错误处理缺失",
+      "description": "DetailedReportsViewModel.kt缺少网络请求错误处理",
+      "level": "CRITICAL",
+      "impact": "应用可能崩溃",
+      "solution": "添加try-catch或错误回调",
+      "effort": "低",
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/presentation/parent/settings/DetailedReportsViewModel.kt",
+      "line": 0
+    },
+    {
+      "perspective": "开发实现",
+      "category": "错误处理缺失",
+      "description": "TimeLimitSettingsViewModel.kt缺少网络请求错误处理",
+      "level": "CRITICAL",
+      "impact": "应用可能崩溃",
+      "solution": "添加try-catch或错误回调",
+      "effort": "低",
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/presentation/parent/settings/TimeLimitSettingsViewModel.kt",
+      "line": 0
+    },
+    {
+      "perspective": "开发实现",
+      "category": "错误处理缺失",
+      "description": "ContentPreferencesViewModel.kt缺少网络请求错误处理",
+      "level": "CRITICAL",
+      "impact": "应用可能崩溃",
+      "solution": "添加try-catch或错误回调",
+      "effort": "低",
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/presentation/parent/settings/ContentPreferencesViewModel.kt",
+      "line": 0
+    },
+    {
+      "perspective": "开发实现",
+      "category": "错误处理缺失",
+      "description": "HomeViewModel.kt缺少网络请求错误处理",
+      "level": "CRITICAL",
+      "impact": "应用可能崩溃",
+      "solution": "添加try-catch或错误回调",
+      "effort": "低",
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/presentation/home/HomeViewModel.kt",
+      "line": 0
+    },
+    {
+      "perspective": "开发实现",
+      "category": "错误处理缺失",
+      "description": "ProfileViewModel.kt缺少网络请求错误处理",
+      "level": "CRITICAL",
+      "impact": "应用可能崩溃",
+      "solution": "添加try-catch或错误回调",
+      "effort": "低",
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/presentation/profile/ProfileViewModel.kt",
+      "line": 0
+    },
+    {
+      "perspective": "开发实现",
+      "category": "错误处理缺失",
+      "description": "ProfileRepository.kt缺少数据库操作错误处理",
+      "level": "CRITICAL",
+      "impact": "应用可能崩溃",
+      "solution": "添加try-catch或错误回调",
+      "effort": "低",
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/domain/repository/ProfileRepository.kt",
+      "line": 0
+    },
+    {
+      "perspective": "开发实现",
+      "category": "错误处理缺失",
+      "description": "StoryRepository.kt缺少数据库操作错误处理",
+      "level": "CRITICAL",
+      "impact": "应用可能崩溃",
+      "solution": "添加try-catch或错误回调",
+      "effort": "低",
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/domain/repository/StoryRepository.kt",
+      "line": 0
+    },
+    {
+      "perspective": "开发实现",
+      "category": "错误处理缺失",
+      "description": "LearningStatsRepository.kt缺少数据库操作错误处理",
+      "level": "CRITICAL",
+      "impact": "应用可能崩溃",
+      "solution": "添加try-catch或错误回调",
+      "effort": "低",
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/domain/repository/LearningStatsRepository.kt",
+      "line": 0
+    },
+    {
+      "perspective": "开发实现",
+      "category": "错误处理缺失",
+      "description": "DialogueRepository.kt缺少数据库操作错误处理",
+      "level": "CRITICAL",
+      "impact": "应用可能崩溃",
+      "solution": "添加try-catch或错误回调",
+      "effort": "低",
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/domain/repository/DialogueRepository.kt",
+      "line": 0
+    },
+    {
+      "perspective": "开发实现",
+      "category": "错误处理缺失",
+      "description": "ImageRecognitionRepository.kt缺少数据库操作错误处理",
+      "level": "CRITICAL",
+      "impact": "应用可能崩溃",
+      "solution": "添加try-catch或错误回调",
+      "effort": "低",
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/domain/repository/ImageRecognitionRepository.kt",
+      "line": 0
+    },
+    {
+      "perspective": "开发实现",
+      "category": "错误处理缺失",
+      "description": "ParentDashboardViewModel.kt缺少数据库操作错误处理",
+      "level": "CRITICAL",
+      "impact": "应用可能崩溃",
+      "solution": "添加try-catch或错误回调",
+      "effort": "低",
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/presentation/parent/ParentDashboardViewModel.kt",
+      "line": 0
+    },
+    {
+      "perspective": "开发实现",
+      "category": "错误处理缺失",
+      "description": "ParentLoginViewModel.kt缺少数据库操作错误处理",
+      "level": "CRITICAL",
+      "impact": "应用可能崩溃",
+      "solution": "添加try-catch或错误回调",
+      "effort": "低",
+      "file": "/workspace/app/src/main/java/com/enlightenment/ai/presentation/parent/ParentLoginViewModel.kt",
+      "line": 0
+    }
+  ],
+  "risks": [
+    "整体质量不达标",
+    "测试严重不足"
+  ],
+  "strengths": [
+    "架构设计良好"
+  ]
+}

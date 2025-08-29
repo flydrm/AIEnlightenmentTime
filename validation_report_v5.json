@@ -1,0 +1,17 @@
+{
+  "success": false,
+  "files_analyzed": 63,
+  "functions_found": 207,
+  "total_issues": 1,
+  "critical_issues": 1,
+  "issues": [
+    {
+      "file": "/workspace/app/build.gradle.kts",
+      "line": 0,
+      "type": "empty_api_key",
+      "desc": "API Key\u4e3a\u7a7a",
+      "level": "CRITICAL",
+      "fix": "\u914d\u7f6e\u771f\u5b9e\u7684API Key"
+    }
+  ]
+}

@@ -171,6 +171,23 @@ AI启蒙时光是一款面向3-6岁儿童的Android教育应用，通过云端AI
 - [报告模板](./sop/validate/reports/) - 标准化报告格式
 - [案例研究](./sop/validate/case-studies.md) - 实际验证案例和经验教训
 
+### [多角色Prompt模板库](./sop/prompts/) 🆕
+基于AI启蒙时光项目经验总结的多角色协作Prompt模板，帮助团队高效利用AI进行项目开发。
+
+#### 角色模板
+- [需求分析师](./sop/prompts/01-requirements-analyst.md) - 需求分析、用户故事、优先级评估
+- [项目分析师](./sop/prompts/02-project-analyst.md) - 市场分析、可行性研究、商业模式
+- [PMO项目管理](./sop/prompts/03-pmo.md) - 项目计划、风险管理、资源协调
+- [QA架构师](./sop/prompts/04-qa-architect.md) - 测试策略、质量保证、自动化方案
+- [解决方案架构师](./sop/prompts/05-solution-architect.md) - 技术架构、选型决策、性能优化
+- [UX/UI设计师](./sop/prompts/06-ux-ui-designer.md) - 用户体验、界面设计、设计系统
+- [开发者](./sop/prompts/07-developer.md) - 代码实现、问题解决、最佳实践
+- [团队协作](./sop/prompts/08-team-collaboration.md) - 多角色协同、决策讨论、冲突解决
+
+#### 使用示例
+- [需求讨论示例](./sop/prompts/examples/requirements-discussion.md) - 架构评审实例
+- [Sprint计划示例](./sop/prompts/examples/sprint-planning.md) - 多角色Sprint计划会议
+
 ---
 
 *最后更新: 2024-12-30*

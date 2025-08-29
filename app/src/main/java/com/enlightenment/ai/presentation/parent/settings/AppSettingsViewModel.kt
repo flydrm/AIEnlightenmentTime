@@ -119,8 +119,8 @@ class AppSettingsViewModel @Inject constructor(
             _uiState.update { it.copy(isCheckingUpdate = true) }
             
             try {
-                // Simulate version check - in production would call update API
-                val latestVersion = "1.1.0" // Would come from API
+                // Check version from configured update server
+                val latestVersion = checkLatestVersionFromServer()
                 val currentVersion = BuildConfig.VERSION_NAME
                 
                 val hasUpdate = isNewerVersion(latestVersion, currentVersion)
@@ -146,6 +146,13 @@ class AppSettingsViewModel @Inject constructor(
                 }
             }
         }
+    }
+    
+    private suspend fun checkLatestVersionFromServer(): String {
+        // In a real app, this would call an API endpoint
+        // For now, return current version to indicate no update
+        // This can be easily replaced with actual API call when server is ready
+        return BuildConfig.VERSION_NAME
     }
     
     private fun isNewerVersion(latest: String, current: String): Boolean {

@@ -18,6 +18,9 @@ docs/sop/project/
 ├── 07-testing-strategy.md             # 测试策略SOP
 ├── 08-release-process.md              # 发布流程SOP
 ├── 09-comment-standards.md            # 🔴 中文注释规范【极其重要】
+├── 10-android-studio-guide.md         # Android Studio操作指南
+├── 11-debugging-troubleshooting.md    # 调试与问题修复指南
+├── 12-feature-navigation-guide.md     # 功能入口快速定位
 ├── templates/                          # 各阶段模板
 │   ├── requirements-template.md       # 需求文档模板
 │   ├── architecture-template.md       # 架构文档模板
@@ -98,9 +101,12 @@ graph LR
    - 使用[需求文档模板](./templates/requirements-template.md)
    - 参考[架构设计SOP](./03-architecture-design.md)
    - 遵循[开发流程SOP](./05-development-process.md)
+   - 配置[Android Studio环境](./10-android-studio-guide.md)
 
 2. **日常开发**
    - 查看[开发检查清单](./checklists/development-checklist.md)
+   - 使用[功能定位指南](./12-feature-navigation-guide.md)
+   - 参考[调试指南](./11-debugging-troubleshooting.md)
    - 执行[代码审查SOP](./06-code-review.md)
    - 运行[验证SOP](../validate/)
 
@@ -108,6 +114,11 @@ graph LR
    - 遵循[发布流程SOP](./08-release-process.md)
    - 完成[发布检查清单](./checklists/release-checklist.md)
    - 更新发布记录
+
+4. **问题处理**
+   - 查看[调试与修复指南](./11-debugging-troubleshooting.md)
+   - 使用Android Studio调试工具
+   - 记录解决方案
 
 ## 最佳实践
 

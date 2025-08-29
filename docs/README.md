@@ -146,6 +146,9 @@ AI启蒙时光是一款面向3-6岁儿童的Android教育应用，通过云端AI
 - [07-测试策略](./sop/project/07-testing-strategy.md) - 全面的测试体系
 - [08-发布流程](./sop/project/08-release-process.md) - 安全可靠的发布管理
 - [09-中文注释规范](./sop/project/09-comment-standards.md) - 🔴 **极其重要：详细的中文注释要求**
+- [10-Android Studio指南](./sop/project/10-android-studio-guide.md) - 项目运行、调试、打包操作
+- [11-调试与修复](./sop/project/11-debugging-troubleshooting.md) - 问题诊断和解决方案
+- [12-功能定位指南](./sop/project/12-feature-navigation-guide.md) - 快速找到功能代码入口
 
 #### 项目资源
 - [开发模板](./sop/project/templates/) - 需求、架构等文档模板

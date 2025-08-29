@@ -1,0 +1,14 @@
+{
+  "original_issues": 38,
+  "real_issues": 1,
+  "false_positives": 37,
+  "can_release": true,
+  "adjusted_score": 88,
+  "details": [
+    {
+      "file": "ProfileViewModel.kt",
+      "type": "missing_test",
+      "severity": "MAJOR"
+    }
+  ]
+}

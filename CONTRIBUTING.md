@@ -1,85 +1,225 @@
-# Contributing to AI启蒙时光
+# 贡献指南
 
-First off, thank you for considering contributing to AI启蒙时光! It's people like you that make this educational app a great tool for children.
+感谢您对AI启蒙时光项目的关注！我们欢迎所有形式的贡献。
 
-## Code of Conduct
+## 📋 贡献方式
 
-This project and everyone participating in it is governed by our Code of Conduct. By participating, you are expected to uphold this code.
+### 1. 报告问题
+- 使用GitHub Issues报告bug
+- 提供详细的复现步骤
+- 包含设备信息和日志
 
-## How Can I Contribute?
+### 2. 功能建议
+- 在Issues中提出新功能想法
+- 说明使用场景和价值
+- 参与功能讨论
 
-### Reporting Bugs
+### 3. 代码贡献
+- Fork项目
+- 创建功能分支
+- 提交Pull Request
 
-Before creating bug reports, please check existing issues as you might find out that you don't need to create one. When you are creating a bug report, please include as many details as possible:
+## 🚀 开发流程
 
-* Use a clear and descriptive title
-* Describe the exact steps to reproduce the problem
-* Provide specific examples to demonstrate the steps
-* Describe the behavior you observed after following the steps
-* Explain which behavior you expected to see instead and why
-* Include screenshots if possible
+### 1. 环境准备
 
-### Suggesting Enhancements
+```bash
+# 克隆项目
+git clone https://github.com/your-org/ai-enlightenment.git
+cd ai-enlightenment
 
-Enhancement suggestions are tracked as GitHub issues. When creating an enhancement suggestion, please include:
+# 创建分支
+git checkout -b feature/your-feature-name
+```
 
-* Use a clear and descriptive title
-* Provide a step-by-step description of the suggested enhancement
-* Provide specific examples to demonstrate the steps
-* Describe the current behavior and explain which behavior you expected to see instead
-* Explain why this enhancement would be useful
+### 2. 开发规范
 
-### Pull Requests
+#### 代码风格
+- 遵循Kotlin官方代码规范
+- 使用有意义的变量名
+- 添加必要的注释
 
-* Fill in the required template
-* Do not include issue numbers in the PR title
-* Follow the Kotlin style guide
-* Include thoughtfully-worded, well-structured tests
-* Document new code
-* End all files with a newline
+#### 提交规范
+```
+<type>(<scope>): <subject>
 
-## Development Process
+<body>
 
-1. Fork the repo and create your branch from `develop`
-2. If you've added code that should be tested, add tests
-3. If you've changed APIs, update the documentation
-4. Ensure the test suite passes
-5. Make sure your code lints
-6. Issue that pull request!
+<footer>
+```
 
-## Style Guide
+类型(type):
+- feat: 新功能
+- fix: 修复bug
+- docs: 文档更新
+- style: 代码格式
+- refactor: 重构
+- test: 测试
+- chore: 构建/辅助工具
 
-### Kotlin Style Guide
+示例：
+```
+feat(story): 添加故事收藏功能
 
-We follow the [official Kotlin coding conventions](https://kotlinlang.org/docs/coding-conventions.html) with some additions:
+- 用户可以收藏喜欢的故事
+- 收藏列表支持离线访问
+- 添加收藏动画效果
 
-* Use 4 spaces for indentation
-* Limit line length to 120 characters
-* Use meaningful variable and function names
-* Add KDoc comments for all public APIs
+Closes #123
+```
 
-### Commit Messages
+### 3. 测试要求
 
-* Use the present tense ("Add feature" not "Added feature")
-* Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
-* Limit the first line to 72 characters or less
-* Reference issues and pull requests liberally after the first line
+- 新功能必须包含单元测试
+- 保持测试覆盖率80%以上
+- 运行所有测试确保通过
 
-### Testing
+```bash
+# 运行单元测试
+./gradlew test
 
-* Write unit tests for all business logic
-* Write UI tests for critical user paths
-* Maintain test coverage above 80%
-* Use descriptive test names that explain what is being tested
+# 运行UI测试
+./gradlew connectedAndroidTest
+```
 
-## Additional Notes
+### 4. Pull Request
 
-### Issue and Pull Request Labels
+#### PR检查清单
+- [ ] 代码符合规范
+- [ ] 添加了测试
+- [ ] 更新了文档
+- [ ] 本地测试通过
+- [ ] 解决了所有冲突
 
-* `bug` - Something isn't working
-* `enhancement` - New feature or request
-* `good first issue` - Good for newcomers
-* `help wanted` - Extra attention is needed
-* `question` - Further information is requested
+#### PR描述模板
+```markdown
+## 变更说明
+简要说明此PR的目的
 
-Thank you for contributing! 🎉
+## 变更类型
+- [ ] Bug修复
+- [ ] 新功能
+- [ ] 性能优化
+- [ ] 代码重构
+
+## 测试
+- [ ] 单元测试
+- [ ] UI测试
+- [ ] 手动测试
+
+## 截图（如适用）
+添加UI变更的截图
+```
+
+## 📁 项目结构
+
+```
+app/
+├── src/
+│   ├── main/
+│   │   ├── java/com/enlightenment/ai/
+│   │   │   ├── data/        # 数据层
+│   │   │   ├── domain/      # 领域层
+│   │   │   ├── presentation/# 表现层
+│   │   │   └── di/          # 依赖注入
+│   │   └── res/             # 资源文件
+│   ├── test/                # 单元测试
+│   └── androidTest/         # UI测试
+└── build.gradle.kts         # 构建配置
+```
+
+## 🛠️ 技术栈
+
+- **语言**: Kotlin
+- **UI**: Jetpack Compose
+- **架构**: Clean Architecture + MVVM
+- **依赖注入**: Hilt
+- **网络**: Retrofit + OkHttp
+- **数据库**: Room
+- **异步**: Coroutines + Flow
+
+## 📝 代码示例
+
+### ViewModel示例
+```kotlin
+@HiltViewModel
+class ExampleViewModel @Inject constructor(
+    private val useCase: ExampleUseCase
+) : ViewModel() {
+    
+    private val _uiState = MutableStateFlow(ExampleUiState())
+    val uiState: StateFlow<ExampleUiState> = _uiState.asStateFlow()
+    
+    fun performAction() {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true) }
+            
+            useCase.execute()
+                .onSuccess { data ->
+                    _uiState.update { 
+                        it.copy(
+                            isLoading = false,
+                            data = data
+                        )
+                    }
+                }
+                .onFailure { error ->
+                    _uiState.update { 
+                        it.copy(
+                            isLoading = false,
+                            error = error.message
+                        )
+                    }
+                }
+        }
+    }
+}
+```
+
+### Composable示例
+```kotlin
+@Composable
+fun ExampleScreen(
+    viewModel: ExampleViewModel = hiltViewModel()
+) {
+    val uiState by viewModel.uiState.collectAsState()
+    
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        when {
+            uiState.isLoading -> {
+                CircularProgressIndicator()
+            }
+            uiState.error != null -> {
+                ErrorMessage(uiState.error)
+            }
+            else -> {
+                Content(uiState.data)
+            }
+        }
+    }
+}
+```
+
+## 🤝 行为准则
+
+- 尊重所有贡献者
+- 建设性的批评和讨论
+- 关注项目目标
+- 帮助新贡献者
+
+## 📮 联系方式
+
+- 项目维护者: [@maintainer](https://github.com/maintainer)
+- 邮件: ai-enlightenment@example.com
+- 讨论区: [GitHub Discussions](https://github.com/your-org/ai-enlightenment/discussions)
+
+## 📄 许可证
+
+通过贡献代码，您同意您的贡献将按照项目的MIT许可证进行授权。
+
+---
+
+感谢您的贡献！让我们一起为孩子们创造更好的AI教育体验！ 🌟

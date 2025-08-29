@@ -11,7 +11,7 @@ import com.enlightenment.ai.presentation.profile.ProfileScreen
 import com.enlightenment.ai.presentation.camera.CameraScreen
 import com.enlightenment.ai.presentation.parent.ParentLoginScreen
 import com.enlightenment.ai.presentation.parent.ParentDashboardScreen
-import com.enlightenment.ai.presentation.parent.settings.TimeLimitSettingsScreen
+import com.enlightenment.ai.presentation.parent.settings.*
 
 @Composable
 fun EnlightenmentNavHost(
@@ -111,6 +111,38 @@ fun EnlightenmentNavHost(
         
         composable(Screen.TimeLimitSettings.route) {
             TimeLimitSettingsScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        
+        composable(Screen.ContentPreferences.route) {
+            ContentPreferencesScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        
+        composable(Screen.DetailedReports.route) {
+            DetailedReportsScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        
+        composable(Screen.PrivacySettings.route) {
+            PrivacySettingsScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+        
+        composable(Screen.AppSettings.route) {
+            AppSettingsScreen(
                 onNavigateBack = {
                     navController.popBackStack()
                 }

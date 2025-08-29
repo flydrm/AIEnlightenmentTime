@@ -131,6 +131,24 @@ AI启蒙时光是一款面向3-6岁儿童的Android教育应用，通过云端AI
 - [ ] 离线内容包
 - [ ] 跨设备同步
 
+## 📚 验证SOP文档
+
+### [项目验证标准操作程序](./sop/validate/)
+完整的验证框架和最佳实践，确保项目达到95%以上的生产就绪标准。
+
+#### 验证框架
+- [01-验证框架总览](./sop/validate/01-validation-framework.md) - 验证工具演进和最佳实践
+- [02-代码质量验证](./sop/validate/02-code-quality-sop.md) - 代码规范和质量检查
+- [03-功能完整性验证](./sop/validate/03-functionality-sop.md) - 端到端功能验证
+- [04-性能验证](./sop/validate/04-performance-sop.md) - 性能指标和优化
+- [05-安全验证](./sop/validate/05-security-sop.md) - 安全和隐私保护
+- [06-用户体验验证](./sop/validate/06-ux-validation-sop.md) - 儿童友好的UX验证
+
+#### 验证资源
+- [验证脚本](./sop/validate/scripts/) - 自动化验证工具
+- [报告模板](./sop/validate/reports/) - 标准化报告格式
+- [案例研究](./sop/validate/case-studies.md) - 实际验证案例和经验教训
+
 ---
 
 *最后更新: 2024-12-30*

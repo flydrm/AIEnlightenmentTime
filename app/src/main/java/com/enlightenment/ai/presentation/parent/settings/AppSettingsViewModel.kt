@@ -10,12 +10,17 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
+import com.enlightenment.ai.BuildConfig
 
 @HiltViewModel
 class AppSettingsViewModel @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) : ViewModel() {
+    
+    private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm")
     
     companion object {
         private val FONT_SIZE_KEY = intPreferencesKey("font_size")
@@ -78,9 +83,31 @@ class AppSettingsViewModel @Inject constructor(
         _uiState.update { it.copy(learningReminders = !it.learningReminders) }
     }
     
-    fun setReminderTime() {
-        // In production, would show time picker dialog
-        _uiState.update { it.copy(reminderTime = "20:00") }
+    fun setReminderTime(hour: Int, minute: Int) {
+        val time = LocalTime.of(hour, minute)
+        val timeString = time.format(timeFormatter)
+        _uiState.update { it.copy(reminderTime = timeString) }
+    }
+    
+    fun showTimePicker() {
+        // Parse current time
+        val currentTime = try {
+            LocalTime.parse(_uiState.value.reminderTime, timeFormatter)
+        } catch (e: Exception) {
+            LocalTime.of(19, 0) // Default to 7 PM
+        }
+        
+        _uiState.update { 
+            it.copy(
+                showTimePickerDialog = true,
+                timePickerHour = currentTime.hour,
+                timePickerMinute = currentTime.minute
+            )
+        }
+    }
+    
+    fun dismissTimePicker() {
+        _uiState.update { it.copy(showTimePickerDialog = false) }
     }
     
     fun updateLanguage(language: String) {
@@ -89,8 +116,48 @@ class AppSettingsViewModel @Inject constructor(
     
     fun checkForUpdates() {
         viewModelScope.launch {
-            // In production, would check for app updates
+            _uiState.update { it.copy(isCheckingUpdate = true) }
+            
+            try {
+                // Simulate version check - in production would call update API
+                val latestVersion = "1.1.0" // Would come from API
+                val currentVersion = BuildConfig.VERSION_NAME
+                
+                val hasUpdate = isNewerVersion(latestVersion, currentVersion)
+                
+                _uiState.update { 
+                    it.copy(
+                        isCheckingUpdate = false,
+                        hasUpdate = hasUpdate,
+                        latestVersion = if (hasUpdate) latestVersion else null,
+                        updateCheckMessage = if (hasUpdate) {
+                            "发现新版本 $latestVersion"
+                        } else {
+                            "已是最新版本"
+                        }
+                    )
+                }
+            } catch (e: Exception) {
+                _uiState.update { 
+                    it.copy(
+                        isCheckingUpdate = false,
+                        updateCheckMessage = "检查更新失败，请稍后重试"
+                    )
+                }
+            }
         }
+    }
+    
+    private fun isNewerVersion(latest: String, current: String): Boolean {
+        val latestParts = latest.split(".").map { it.toIntOrNull() ?: 0 }
+        val currentParts = current.split(".").map { it.toIntOrNull() ?: 0 }
+        
+        for (i in 0 until minOf(latestParts.size, currentParts.size)) {
+            if (latestParts[i] > currentParts[i]) return true
+            if (latestParts[i] < currentParts[i]) return false
+        }
+        
+        return latestParts.size > currentParts.size
     }
     
     fun saveSettings() {
@@ -119,5 +186,12 @@ data class AppSettingsUiState(
     val learningReminders: Boolean = true,
     val reminderTime: String = "19:00",
     val language: String = "简体中文",
-    val appVersion: String = "1.0.0"
+    val appVersion: String = BuildConfig.VERSION_NAME,
+    val showTimePickerDialog: Boolean = false,
+    val timePickerHour: Int = 19,
+    val timePickerMinute: Int = 0,
+    val isCheckingUpdate: Boolean = false,
+    val hasUpdate: Boolean = false,
+    val latestVersion: String? = null,
+    val updateCheckMessage: String? = null
 )

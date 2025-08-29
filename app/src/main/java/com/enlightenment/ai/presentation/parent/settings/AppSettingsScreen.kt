@@ -12,6 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import android.app.TimePickerDialog
+import androidx.compose.ui.platform.LocalContext
+import java.util.Calendar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -20,6 +23,29 @@ fun AppSettingsScreen(
     viewModel: AppSettingsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val context = LocalContext.current
+    
+    // Show time picker dialog when needed
+    if (uiState.showTimePickerDialog) {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, uiState.timePickerHour)
+        calendar.set(Calendar.MINUTE, uiState.timePickerMinute)
+        
+        TimePickerDialog(
+            context,
+            { _, hourOfDay, minute ->
+                viewModel.setReminderTime(hourOfDay, minute)
+                viewModel.dismissTimePicker()
+            },
+            calendar.get(Calendar.HOUR_OF_DAY),
+            calendar.get(Calendar.MINUTE),
+            true // Use 24-hour format
+        ).apply {
+            setOnCancelListener {
+                viewModel.dismissTimePicker()
+            }
+        }.show()
+    }
     
     Scaffold(
         topBar = {
@@ -195,7 +221,7 @@ fun AppSettingsScreen(
                         Spacer(modifier = Modifier.height(12.dp))
                         
                         OutlinedButton(
-                            onClick = { viewModel.setReminderTime() },
+                            onClick = { viewModel.showTimePicker() },
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Text("设置提醒时间: ${uiState.reminderTime}")
@@ -259,9 +285,29 @@ fun AppSettingsScreen(
                     
                     TextButton(
                         onClick = { viewModel.checkForUpdates() },
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
+                        enabled = !uiState.isCheckingUpdate
                     ) {
-                        Text("检查更新")
+                        if (uiState.isCheckingUpdate) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(16.dp),
+                                strokeWidth = 2.dp
+                            )
+                        } else {
+                            Text("检查更新")
+                        }
+                    }
+                    
+                    if (uiState.updateCheckMessage != null) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                        Text(
+                            text = uiState.updateCheckMessage,
+                            style = MaterialTheme.typography.bodySmall,
+                            color = if (uiState.hasUpdate) 
+                                MaterialTheme.colorScheme.primary 
+                            else 
+                                MaterialTheme.colorScheme.onSurfaceVariant
+                        )
                     }
                 }
             }

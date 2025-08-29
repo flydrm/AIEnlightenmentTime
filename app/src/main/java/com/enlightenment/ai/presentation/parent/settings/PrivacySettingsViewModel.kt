@@ -1,6 +1,8 @@
 package com.enlightenment.ai.presentation.parent.settings
 
 import android.app.Application
+import android.content.Intent
+import android.net.Uri
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
 import androidx.lifecycle.AndroidViewModel
@@ -20,6 +22,7 @@ class PrivacySettingsViewModel @Inject constructor(
 ) : AndroidViewModel(application) {
     
     companion object {
+        private const val PRIVACY_POLICY_URL = "https://ai-edu.cloud.tencent.com/privacy-policy"
         private val COLLECT_USAGE_KEY = booleanPreferencesKey("collect_usage_data")
         private val PERSONALIZED_KEY = booleanPreferencesKey("personalized_recommendations")
         private val LOCAL_BACKUP_KEY = booleanPreferencesKey("local_backup")
@@ -108,7 +111,17 @@ class PrivacySettingsViewModel @Inject constructor(
     }
     
     fun openPrivacyPolicy() {
-        // In production, would open privacy policy URL
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(PRIVACY_POLICY_URL)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        
+        try {
+            getApplication<Application>().startActivity(intent)
+        } catch (e: Exception) {
+            // If no browser is available, show the URL in UI
+            _uiState.update { it.copy(showPrivacyPolicyUrl = true) }
+        }
     }
 }
 
@@ -118,5 +131,6 @@ data class PrivacySettingsUiState(
     val localBackup: Boolean = true,
     val cloudSync: Boolean = false,
     val cameraPermission: Boolean = true,
-    val microphonePermission: Boolean = false
+    val microphonePermission: Boolean = false,
+    val showPrivacyPolicyUrl: Boolean = false
 )

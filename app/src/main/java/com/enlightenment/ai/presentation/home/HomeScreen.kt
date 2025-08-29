@@ -18,6 +18,33 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.enlightenment.ai.presentation.common.PandaAnimation
 import com.enlightenment.ai.presentation.theme.*
 
+/**
+ * 首页界面
+ * 
+ * 功能说明：
+ * 应用的主界面，展示小熊猫吉祥物和四个核心功能入口。
+ * 采用儿童友好的设计，大按钮、鲜艳色彩、动画效果。
+ * 
+ * UI布局：
+ * 1. 顶部35%：小熊猫动画区域，显示问候语
+ * 2. 中间50%：2x2网格展示四个功能模块
+ * 3. 底部15%：家长入口和其他辅助功能
+ * 
+ * 交互设计：
+ * - 大触摸目标（最小48dp）防止误触
+ * - 点击反馈动画增强交互感
+ * - 语音引导帮助不识字儿童
+ * 
+ * @param onNavigateToStory 导航到故事功能的回调
+ * @param onNavigateToDialogue 导航到对话功能的回调
+ * @param onNavigateToCamera 导航到相机功能的回调
+ * @param onNavigateToProfile 导航到个人中心的回调
+ * @param onNavigateToParentLogin 导航到家长入口的回调
+ * @param viewModel 首页的ViewModel，管理UI状态
+ * 
+ * @author AI启蒙时光团队
+ * @since 1.0.0
+ */
 @Composable
 fun HomeScreen(
     onNavigateToStory: () -> Unit,
@@ -118,6 +145,30 @@ fun HomeScreen(
     }
 }
 
+/**
+ * 功能卡片组件
+ * 
+ * 设计说明：
+ * 专为3-6岁儿童设计的功能入口卡片。
+ * 采用大尺寸、圆角、鲜艳色彩的设计语言。
+ * 
+ * 设计原则：
+ * - 正方形设计（aspectRatio 1:1）保持视觉平衡
+ * - 24dp大圆角营造友好感
+ * - Emoji图标直观表达功能，无需识字
+ * - 8dp阴影增强立体感和可点击性
+ * 
+ * 交互反馈：
+ * - 点击时有压感动画
+ * - 支持触觉反馈（振动）
+ * - 防误触设计
+ * 
+ * @param title 功能标题，2-4个字为佳
+ * @param emoji 表情图标，增强识别度
+ * @param backgroundColor 背景色，使用主题色
+ * @param modifier 修饰符，用于布局调整
+ * @param onClick 点击回调函数
+ */
 @Composable
 private fun FunctionCard(
     title: String,

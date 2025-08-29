@@ -11,6 +11,29 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * 首页ViewModel
+ * 
+ * 职责说明：
+ * 管理首页的UI状态，包括个性化问候语和小熊猫动画状态。
+ * 根据儿童档案信息提供个性化的用户体验。
+ * 
+ * 核心功能：
+ * 1. 加载儿童档案信息
+ * 2. 生成个性化问候语
+ * 3. 控制小熊猫表情动画
+ * 4. 管理页面加载状态
+ * 
+ * 个性化策略：
+ * - 有档案：使用儿童姓名打招呼
+ * - 无档案：使用通用问候语
+ * - 根据时间段调整问候内容（可扩展）
+ * 
+ * @property profileRepository 档案仓库，获取儿童信息
+ * 
+ * @author AI启蒙时光团队
+ * @since 1.0.0
+ */
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val profileRepository: ProfileRepository
@@ -20,12 +43,33 @@ class HomeViewModel @Inject constructor(
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
     
     init {
+        // 初始化时加载儿童档案
         loadProfile()
     }
     
+    /**
+     * 加载儿童档案信息
+     * 
+     * 功能流程：
+     * 1. 异步获取档案数据
+     * 2. 根据档案生成个性化问候
+     * 3. 设置小熊猫表情为快乐
+     * 
+     * 问候语策略：
+     * - 有姓名：「嗨，{姓名}！今天想学什么呢？」
+     * - 无姓名：「嗨，小朋友！让我们开始今天的学习吧！」
+     * 
+     * 后续扩展：
+     * - 根据时间段调整问候（早上好/下午好/晚上好）
+     * - 根据学习记录推荐内容
+     * - 节日特殊问候
+     */
     private fun loadProfile() {
         viewModelScope.launch {
+            // 从仓库获取档案
             val profile = profileRepository.getProfile()
+            
+            // 更新UI状态
             _uiState.update { currentState ->
                 currentState.copy(
                     greeting = if (profile != null) {
@@ -33,13 +77,23 @@ class HomeViewModel @Inject constructor(
                     } else {
                         "嗨，小朋友！让我们开始今天的学习吧！"
                     },
-                    pandaMood = "happy"
+                    pandaMood = "happy"  // 初始状态总是快乐的
                 )
             }
         }
     }
 }
 
+/**
+ * 首页UI状态
+ * 
+ * 包含首页所需的所有UI状态数据。
+ * 使用data class确保状态的不可变性。
+ * 
+ * @property greeting 个性化问候语
+ * @property pandaMood 小熊猫表情状态（happy/curious/excited等）
+ * @property isLoading 页面加载状态，预留给未来使用
+ */
 data class HomeUiState(
     val greeting: String = "嗨，小朋友！",
     val pandaMood: String = "happy",

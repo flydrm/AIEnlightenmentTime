@@ -20,6 +20,32 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * 数据层 - 故事仓库实现
+ * 
+ * 架构职责：
+ * 实现Domain层定义的StoryRepository接口，协调远程API和本地缓存。
+ * 负责数据的获取、转换、缓存和错误处理。
+ * 
+ * 核心功能：
+ * 1. 调用AI API生成故事
+ * 2. 管理本地故事缓存
+ * 3. 处理网络异常和降级
+ * 4. 数据模型转换
+ * 
+ * 降级策略：
+ * - 网络异常 → 返回本地缓存
+ * - API限流 → 延迟重试
+ * - 服务不可用 → 使用离线内容
+ * 
+ * 依赖说明：
+ * @property apiService 远程API服务，负责与AI服务通信
+ * @property storyDao 本地数据访问对象，管理SQLite存储
+ * @property gson JSON解析工具，用于数据序列化
+ * 
+ * @author AI启蒙时光团队
+ * @since 1.0.0
+ */
 @Singleton
 class StoryRepositoryImpl @Inject constructor(
     private val apiService: AIApiService,
@@ -27,12 +53,33 @@ class StoryRepositoryImpl @Inject constructor(
     private val gson: Gson
 ) : StoryRepository {
     
+    /**
+     * 生成AI故事
+     * 
+     * 实现流程：
+     * 1. 构建请求参数，包含儿童信息和主题
+     * 2. 调用AI API生成故事（支持重试）
+     * 3. 转换响应数据为领域模型
+     * 4. 保存到本地缓存供离线使用
+     * 5. 异常时返回缓存内容
+     * 
+     * 重试策略：
+     * - 使用NetworkRetryPolicy处理网络异常
+     * - 429错误（限流）自动延迟重试
+     * - 5xx错误（服务器）指数退避重试
+     * 
+     * 缓存策略：
+     * - 成功生成后自动保存
+     * - 失败时查找相同主题的缓存
+     * - 无匹配时返回随机缓存故事
+     */
     override suspend fun generateStory(
         childAge: Int,
         interests: List<String>,
         theme: String?
     ): Result<Story> = withContext(Dispatchers.IO) {
         try {
+            // Step 1: 构建API请求参数
             val request = StoryGenerateRequest(
                 childProfile = ChildProfileRequest(
                     age = childAge,
@@ -43,8 +90,12 @@ class StoryRepositoryImpl @Inject constructor(
                 )
             )
             
-            val response = apiService.generateStory(request)
+            // Step 2: 调用AI服务生成故事（带重试机制）
+            val response = NetworkRetryPolicy.retryableNetworkCall {
+                apiService.generateStory(request)
+            }
             
+            // Step 3: 转换API响应为领域模型
             val story = Story(
                 id = response.id,
                 title = response.title,

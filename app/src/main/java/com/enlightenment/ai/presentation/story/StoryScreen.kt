@@ -18,6 +18,36 @@ import coil.compose.AsyncImage
 import com.enlightenment.ai.presentation.common.LoadingAnimation
 import com.enlightenment.ai.presentation.theme.CreamBackground
 
+/**
+ * 故事界面
+ * 
+ * 功能说明：
+ * 展示AI生成的儿童故事，支持语音朗读和互动问答。
+ * 采用儿童友好的设计，大字体、配图、互动按钮。
+ * 
+ * UI结构：
+ * 1. 顶部栏：标题和返回按钮
+ * 2. 故事区域：标题、配图、正文内容
+ * 3. 控制区：播放/暂停按钮、换一个按钮
+ * 4. 问答区：故事相关的选择题
+ * 
+ * 交互功能：
+ * - 语音朗读：TTS朗读故事内容
+ * - 滚动阅读：支持上下滑动
+ * - 互动问答：检验理解程度
+ * - 重新生成：获取新故事
+ * 
+ * 状态处理：
+ * - Loading：显示加载动画
+ * - Success：展示故事内容
+ * - Error：显示错误提示
+ * 
+ * @param onNavigateBack 返回上一页的回调
+ * @param viewModel 故事界面的ViewModel
+ * 
+ * @author AI启蒙时光团队
+ * @since 1.0.0
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun StoryScreen(

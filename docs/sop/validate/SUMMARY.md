@@ -20,11 +20,13 @@
 4. [性能验证](./04-performance-sop.md) - 性能优化
 5. [安全验证](./05-security-sop.md) - 安全检查
 6. [用户体验验证](./06-ux-validation-sop.md) - UX评估
+7. [注释质量验证](./07-comment-validation-sop.md) - 加权注释检查 ⭐
 
 ### 🔧 验证工具
 - `scripts/quality-check.sh` - 基础质量检查
 - `scripts/validator-v5-fixed.py` - 智能验证器
 - `scripts/deep-validator.sh` - 深度验证
+- `scripts/weighted-comment-check.py` - 加权注释检查 ⭐
 
 ### 📊 报告模板
 - `reports/validation-report-template.md` - 完整报告模板
@@ -40,6 +42,7 @@
 - ✅ 0个空实现（排除接口）
 - ✅ 完整的错误处理
 - ✅ 符合Clean Architecture
+- ✅ 注释质量≥95分（加权）
 
 ### 功能完整性
 - ✅ 5个核心功能全部实现

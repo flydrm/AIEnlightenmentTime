@@ -1,6 +1,8 @@
 package com.enlightenment.ai.presentation.camera
 
 import android.Manifest
+import android.util.Log
+import android.widget.Toast
 import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
@@ -210,7 +212,12 @@ private fun CameraPreview(
                             }
                             
                             override fun onError(exception: ImageCaptureException) {
-                                // Handle error
+                                Log.e("CameraScreen", "Image capture failed", exception)
+                                Toast.makeText(
+                                    context,
+                                    "拍照失败，请重试",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                             }
                         }
                     )

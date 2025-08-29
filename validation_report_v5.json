@@ -1,7 +1,7 @@
 {
   "success": false,
-  "files_analyzed": 63,
-  "functions_found": 207,
+  "files_analyzed": 71,
+  "functions_found": 266,
   "total_issues": 1,
   "critical_issues": 1,
   "issues": [

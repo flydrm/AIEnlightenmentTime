@@ -131,9 +131,27 @@ AI启蒙时光是一款面向3-6岁儿童的Android教育应用，通过云端AI
 - [ ] 离线内容包
 - [ ] 跨设备同步
 
-## 📚 验证SOP文档
+## 📚 SOP文档体系
 
-### [项目验证标准操作程序](./sop/validate/)
+### [项目开发SOP](./sop/project/)
+完整的Android项目开发标准操作程序，从需求到发布的全流程指导。
+
+#### 开发流程
+- [01-需求开发](./sop/project/01-requirements-development.md) - 需求收集、分析和管理
+- [02-需求讨论](./sop/project/02-requirements-discussion.md) - 高效的需求沟通机制
+- [03-架构设计](./sop/project/03-architecture-design.md) - Clean Architecture最佳实践
+- [04-UX/UI设计](./sop/project/04-ux-ui-design.md) - 用户体验和界面设计流程
+- [05-开发流程](./sop/project/05-development-process.md) - 编码规范和开发实践
+- [06-代码审查](./sop/project/06-code-review.md) - 代码质量保证机制
+- [07-测试策略](./sop/project/07-testing-strategy.md) - 全面的测试体系
+- [08-发布流程](./sop/project/08-release-process.md) - 安全可靠的发布管理
+
+#### 项目资源
+- [开发模板](./sop/project/templates/) - 需求、架构等文档模板
+- [检查清单](./sop/project/checklists/) - 各阶段标准化检查清单
+- [项目总结](./sop/project/SUMMARY.md) - 最佳实践和经验总结
+
+### [项目验证SOP](./sop/validate/)
 完整的验证框架和最佳实践，确保项目达到95%以上的生产就绪标准。
 
 #### 验证框架

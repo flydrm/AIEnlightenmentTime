@@ -32,9 +32,45 @@ import com.google.accompanist.permissions.shouldShowRationale
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
+/**
+ * 拍照识别界面
+ * 
+ * 功能说明：
+ * 通过AI图像识别帮助儿童认识周围的事物。
+ * 支持实时拍照、图像识别、教育内容展示。
+ * 
+ * UI布局：
+ * 1. 顶部栏：标题和导航按钮
+ * 2. 内容区域：主要功能展示
+ * 3. 操作区域：用户交互控件
+ * 
+ * 交互设计：
+ * - 响应式布局：适配不同屏幕尺寸
+ * - 即时反馈：操作后立即显示结果
+ * - 错误处理：友好的错误提示
+ * - 加载状态：异步操作时显示进度
+ * 
+ * 用户体验优化：
+ * - 简洁明了的界面设计
+ * - 符合Material Design规范
+ * - 支持手势操作
+ * - 无障碍支持
+ * 
+ * 技术特点：
+ * - Jetpack Compose声明式UI
+ * - StateFlow状态管理
+ * - 协程处理异步操作
+ * - MVVM架构模式
+ * 
+ * @param onNavigateBack 返回导航回调
+ * @param viewModel 界面对应的ViewModel
+ * 
+ * @author AI启蒙时光团队
+ * @since 1.0.0
+ */
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalPermissionsApi::class)
 @Composable
-fun CameraScreen(
+fun CameraScreen(  // 可组合UI组件
     onNavigateBack: () -> Unit,
     viewModel: CameraViewModel = hiltViewModel()
 ) {
@@ -114,7 +150,7 @@ fun CameraScreen(
 }
 
 @Composable
-private fun PermissionRequest(
+private fun PermissionRequest(  // 可组合UI组件
     onRequestPermission: () -> Unit
 ) {
     Column(
@@ -141,7 +177,7 @@ private fun PermissionRequest(
 }
 
 @Composable
-private fun CameraPreview(
+private fun CameraPreview(  // 可组合UI组件
     onImageCaptured: (String) -> Unit
 ) {
     val context = LocalContext.current
@@ -177,14 +213,14 @@ private fun CameraPreview(
                             preview,
                             imageCapture
                         )
-                    } catch (exc: Exception) {
-                        // Handle error
+                    } catch (exc: Exception) {  // 捕获并处理异常
+                        // Handle 错误
                     }
                 }, ContextCompat.getMainExecutor(context))
             }
         )
         
-        // Capture button
+        // Capture 按钮
         Box(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -242,7 +278,7 @@ private fun CameraPreview(
 }
 
 @Composable
-private fun ResultScreen(
+private fun ResultScreen(  // 可组合UI组件
     result: RecognitionResult,
     onRetake: () -> Unit
 ) {

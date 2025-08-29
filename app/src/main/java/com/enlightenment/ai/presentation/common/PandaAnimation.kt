@@ -24,7 +24,7 @@ import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.foundation.Canvas
 
 @Composable
-fun PandaAnimation(
+fun PandaAnimation(  // 可组合UI组件
     mood: String,
     greeting: String? = null,
     modifier: Modifier = Modifier
@@ -90,7 +90,7 @@ fun PandaAnimation(
 }
 
 @Composable
-private fun RedPandaCharacter(
+private fun RedPandaCharacter(  // 可组合UI组件
     modifier: Modifier = Modifier,
     mood: String = "happy"
 ) {
@@ -130,7 +130,7 @@ private fun RedPandaCharacter(
         val eyeRadius = radius * 0.08f
         val eyeY = centerY - radius * 0.1f
         
-        when (mood) {
+        when (mood) {  // 根据条件进行分支处理
             "happy" -> {
                 // Happy eyes (curved)
                 drawArc(

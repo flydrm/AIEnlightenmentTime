@@ -28,6 +28,18 @@ package com.enlightenment.ai.domain.model
  * @property recentTopics 最近学习主题，避免重复
  * @property companionPersonality AI伴侣性格设置
  */
+/**
+ * ChildProfile - ChildProfile
+ * 
+ * 领域数据模型，表示业务概念和规则
+ * 
+ * 模型特点：
+ * - 不可变数据设计
+ * - 业务逻辑封装
+ * - 领域规则验证
+ * 
+ * @自版本 1.0.0
+ */
 data class ChildProfile(
     val id: String,
     val name: String,
@@ -52,6 +64,15 @@ data class ChildProfile(
  * - NORMAL: 正常水平，适合大部分同龄儿童
  * - ADVANCED: 进阶水平，可以接受更复杂的内容
  */
+/**
+ * LearningLevel - LearningLevel
+ * 
+ * 枚举类型，定义固定的常量集合
+ * 
+ * 提供类型安全的常量管理
+ * 
+ * @自版本 1.0.0
+ */
 enum class LearningLevel {
     BEGINNER,    // 初学者
     NORMAL,      // 正常水平
@@ -70,6 +91,15 @@ enum class LearningLevel {
  * - AUDITORY: 听觉型，喜欢语音、音乐、韵律
  * - KINESTHETIC: 动觉型，喜欢互动、操作、体验
  * - MIXED: 混合型，多种风格结合
+ */
+/**
+ * LearningStyle - LearningStyle
+ * 
+ * 枚举类型，定义固定的常量集合
+ * 
+ * 提供类型安全的常量管理
+ * 
+ * @自版本 1.0.0
  */
 enum class LearningStyle {
     VISUAL,      // 视觉型学习者
@@ -93,6 +123,18 @@ enum class LearningStyle {
  * @property name AI伴侣名称，默认"小熊猫"
  * @property traits 性格特征列表，如友好、鼓励、耐心
  * @property speechStyle 说话风格，温柔亲切型
+ */
+/**
+ * CompanionPersonality - CompanionPersonality
+ * 
+ * 领域数据模型，表示业务概念和规则
+ * 
+ * 模型特点：
+ * - 不可变数据设计
+ * - 业务逻辑封装
+ * - 领域规则验证
+ * 
+ * @自版本 1.0.0
  */
 data class CompanionPersonality(
     val name: String = "小熊猫",

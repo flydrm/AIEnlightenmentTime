@@ -13,13 +13,20 @@ import androidx.compose.ui.unit.IntOffset
 /**
  * 儿童友好的动画效果集合
  */
+/**
+ * ChildFriendlyAnimations - 通用UI组件
+ * 
+ * 提供可复用的用户界面组件，确保一致的交互体验
+ * 
+ * @自版本 1.0.0
+ */
 object ChildFriendlyAnimations {
     
     /**
      * 弹跳进入动画
      */
     @Composable
-    fun BounceIn(
+    fun BounceIn(  // 可组合UI组件
         visible: Boolean,
         content: @Composable AnimatedVisibilityScope.() -> Unit
     ) {
@@ -42,7 +49,7 @@ object ChildFriendlyAnimations {
      * 摇摆动画
      */
     @Composable
-    fun Wiggle(
+    fun Wiggle(  // 可组合UI组件
         modifier: Modifier = Modifier,
         content: @Composable () -> Unit
     ) {
@@ -71,7 +78,7 @@ object ChildFriendlyAnimations {
      * 脉冲动画
      */
     @Composable
-    fun Pulse(
+    fun Pulse(  // 可组合UI组件
         modifier: Modifier = Modifier,
         content: @Composable () -> Unit
     ) {
@@ -97,7 +104,7 @@ object ChildFriendlyAnimations {
      * 彩虹出现动画
      */
     @Composable
-    fun RainbowAppear(
+    fun RainbowAppear(  // 可组合UI组件
         visible: Boolean,
         content: @Composable AnimatedVisibilityScope.() -> Unit
     ) {
@@ -121,7 +128,7 @@ object ChildFriendlyAnimations {
      * 星星闪烁效果
      */
     @Composable
-    fun Sparkle(
+    fun Sparkle(  // 可组合UI组件
         modifier: Modifier = Modifier,
         content: @Composable () -> Unit
     ) {
@@ -156,7 +163,7 @@ object ChildFriendlyAnimations {
      * 漂浮动画
      */
     @Composable
-    fun Float(
+    fun Float(  // 可组合UI组件
         modifier: Modifier = Modifier,
         floatRange: Float = 10f,
         content: @Composable () -> Unit
@@ -183,7 +190,7 @@ object ChildFriendlyAnimations {
      * 成功庆祝动画
      */
     @Composable
-    fun CelebrationBounce(
+    fun CelebrationBounce(  // 可组合UI组件
         trigger: Boolean,
         content: @Composable () -> Unit
     ) {
@@ -234,6 +241,13 @@ object ChildFriendlyAnimations {
 
 /**
  * 动画时长常量（毫秒）
+ */
+/**
+ * AnimationDuration - 通用UI组件
+ * 
+ * 提供可复用的用户界面组件，确保一致的交互体验
+ * 
+ * @自版本 1.0.0
  */
 object AnimationDuration {
     const val SHORT = 200

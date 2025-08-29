@@ -20,9 +20,40 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.enlightenment.ai.presentation.theme.CreamBackground
 import kotlinx.coroutines.launch
 
+/**
+ * 智能对话界面
+ * 
+ * 功能说明：
+ * 提供儿童与AI小熊猫的聊天交互界面。
+ * 支持文字输入、快捷回复、消息历史展示。
+ * 
+ * UI布局：
+ * 1. 顶部栏：标题和返回按钮
+ * 2. 消息列表：展示对话历史，自动滚动到最新
+ * 3. 建议回复：快捷回复按钮，方便不会打字的儿童
+ * 4. 输入区域：文字输入框和发送按钮
+ * 
+ * 交互特点：
+ * - 消息气泡：区分用户和AI消息
+ * - 自动滚动：新消息自动滚动到底部
+ * - 加载提示：AI思考时显示加载动画
+ * - 快捷输入：点击建议自动发送
+ * 
+ * 儿童友好设计：
+ * - 大字体显示
+ * - 简单的输入方式
+ * - 友好的对话氛围
+ * - 教育性的回复内容
+ * 
+ * @param onNavigateBack 返回上一页的回调
+ * @param viewModel 对话界面的ViewModel
+ * 
+ * @author AI启蒙时光团队
+ * @since 1.0.0
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DialogueScreen(
+fun DialogueScreen(  // 可组合UI组件
     onNavigateBack: () -> Unit,
     viewModel: DialogueViewModel = hiltViewModel()
 ) {
@@ -54,7 +85,7 @@ fun DialogueScreen(
                 .padding(paddingValues)
                 .background(CreamBackground)
         ) {
-            // Messages list
+            // Messages 列表
             LazyColumn(
                 modifier = Modifier
                     .weight(1f)
@@ -88,7 +119,7 @@ fun DialogueScreen(
                             onClick = {
                                 inputText = reply
                                 viewModel.sendMessage(reply)
-                                coroutineScope.launch {
+                                coroutineScope.launch {  // 启动协程执行异步操作
                                     scrollState.animateScrollToItem(0)
                                 }
                             },
@@ -122,7 +153,7 @@ fun DialogueScreen(
                         if (inputText.isNotBlank()) {
                             viewModel.sendMessage(inputText.trim())
                             inputText = ""
-                            coroutineScope.launch {
+                            coroutineScope.launch {  // 启动协程执行异步操作
                                 scrollState.animateScrollToItem(0)
                             }
                         }
@@ -137,7 +168,7 @@ fun DialogueScreen(
 }
 
 @Composable
-private fun MessageBubble(
+private fun MessageBubble(  // 可组合UI组件
     message: MessageDisplayModel,
     isFromUser: Boolean
 ) {

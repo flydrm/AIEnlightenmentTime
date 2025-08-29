@@ -41,6 +41,19 @@ import dagger.hilt.android.AndroidEntryPoint
  * @since 1.0.0
  */
 @AndroidEntryPoint
+/**
+ * MainActivity - MainActivity
+ * 
+ * 功能描述：
+ * - 提供核心业务功能处理功能
+ * - 支持灵活配置、易于扩展、高性能
+ * 
+ * 设计说明：
+ * - 采用面向对象设计
+ * - 遵循项目统一的架构规范
+ * 
+ * @since 1.0.0
+ */
 class MainActivity : ComponentActivity() {
     /**
      * Activity创建时调用

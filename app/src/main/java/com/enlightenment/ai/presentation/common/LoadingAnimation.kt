@@ -14,7 +14,7 @@ import androidx.compose.ui.draw.scale
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun LoadingAnimation(
+fun LoadingAnimation(  // 可组合UI组件
     message: String,
     modifier: Modifier = Modifier
 ) {
@@ -32,7 +32,7 @@ fun LoadingAnimation(
 }
 
 @Composable
-private fun LoadingDots() {
+private fun LoadingDots() {  // 可组合UI组件
     val infiniteTransition = rememberInfiniteTransition(label = "loading")
     
     Row(

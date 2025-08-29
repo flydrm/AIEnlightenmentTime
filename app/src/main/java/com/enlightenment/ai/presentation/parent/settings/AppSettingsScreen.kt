@@ -16,16 +16,52 @@ import android.app.TimePickerDialog
 import androidx.compose.ui.platform.LocalContext
 import java.util.Calendar
 
+/**
+ * 应用设置界面
+ * 
+ * 功能说明：
+ * 应用级别的设置管理。
+ * 包含通知、缓存、版本更新等设置项。
+ * 
+ * UI布局：
+ * 1. 顶部栏：标题和导航按钮
+ * 2. 内容区域：主要功能展示
+ * 3. 操作区域：用户交互控件
+ * 
+ * 交互设计：
+ * - 响应式布局：适配不同屏幕尺寸
+ * - 即时反馈：操作后立即显示结果
+ * - 错误处理：友好的错误提示
+ * - 加载状态：异步操作时显示进度
+ * 
+ * 用户体验优化：
+ * - 简洁明了的界面设计
+ * - 符合Material Design规范
+ * - 支持手势操作
+ * - 无障碍支持
+ * 
+ * 技术特点：
+ * - Jetpack Compose声明式UI
+ * - StateFlow状态管理
+ * - 协程处理异步操作
+ * - MVVM架构模式
+ * 
+ * @param onNavigateBack 返回导航回调
+ * @param viewModel 界面对应的ViewModel
+ * 
+ * @author AI启蒙时光团队
+ * @since 1.0.0
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppSettingsScreen(
+fun AppSettingsScreen(  // 可组合UI组件
     onNavigateBack: () -> Unit,
     viewModel: AppSettingsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val context = LocalContext.current
     
-    // Show time picker dialog when needed
+    // Show time picker 对话框 when needed
     if (uiState.showTimePickerDialog) {
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.HOUR_OF_DAY, uiState.timePickerHour)
@@ -328,7 +364,7 @@ fun AppSettingsScreen(
 }
 
 @Composable
-private fun RadioButtonGroup(
+private fun RadioButtonGroup(  // 可组合UI组件
     options: List<String>,
     selectedOption: String,
     onOptionSelected: (String) -> Unit

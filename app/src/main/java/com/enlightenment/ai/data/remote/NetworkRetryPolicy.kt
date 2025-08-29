@@ -8,6 +8,13 @@ import kotlin.math.min
 /**
  * 网络重试策略
  */
+/**
+ * NetworkRetryPolicy - 网络重试策略
+ * 
+ * 远程数据访问组件，负责与服务端API通信
+ * 
+ * @自版本 1.0.0
+ */
 class NetworkRetryPolicy(
     private val maxRetries: Int = 3,
     private val initialDelayMs: Long = 1000,
@@ -23,7 +30,7 @@ class NetworkRetryPolicy(
         repeat(maxRetries) { attempt ->
             try {
                 return block()
-            } catch (e: Exception) {
+            } catch (e: Exception) {  // 捕获并处理异常
                 lastException = e
                 
                 // 判断是否应该重试
@@ -64,7 +71,7 @@ suspend fun <T> retryableNetworkCall(
 ): Result<T> {
     return try {
         Result.success(retryPolicy.executeWithRetry(call))
-    } catch (e: Exception) {
+    } catch (e: Exception) {  // 捕获并处理异常
         Result.failure(e)
     }
 }

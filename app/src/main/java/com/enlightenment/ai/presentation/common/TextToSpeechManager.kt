@@ -41,7 +41,14 @@ import javax.inject.Singleton
  * @since 1.0.0
  */
 @Singleton
-class TextToSpeechManager @Inject constructor(
+/**
+ * TextToSpeechManager - 通用UI组件
+ * 
+ * 提供可复用的用户界面组件，确保一致的交互体验
+ * 
+ * @自版本 1.0.0
+ */
+class TextToSpeechManager @Inject constructor(  // 依赖注入
     @ApplicationContext private val context: Context
 ) {
     private var tts: TextToSpeech? = null

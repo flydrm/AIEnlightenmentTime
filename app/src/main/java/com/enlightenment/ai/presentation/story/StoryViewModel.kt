@@ -38,7 +38,27 @@ import javax.inject.Inject
  * @since 1.0.0
  */
 @HiltViewModel
-class StoryViewModel @Inject constructor(
+/**
+ * StoryViewModel - Story视图模型
+ * 
+ * 功能职责：
+ * - 管理Story界面的业务逻辑
+ * - 处理用户交互事件和状态更新
+ * - 协调数据层和展示层的通信
+ * 
+ * 状态管理：
+ * - 使用StateFlow管理UI状态
+ * - 支持配置变更后的状态保持
+ * - 提供状态更新的原子性保证
+ * 
+ * 生命周期：
+ * - 自动处理协程作用域
+ * - 支持数据预加载
+ * - 优雅的资源清理
+ * 
+ * @since 1.0.0
+ */
+class StoryViewModel @Inject constructor(  // 依赖注入
     private val generateStoryUseCase: GenerateStoryUseCase,
     private val ttsManager: TextToSpeechManager
 ) : ViewModel() {
@@ -70,7 +90,7 @@ class StoryViewModel @Inject constructor(
      * @param theme 故事主题，可选。如"冒险"、"友谊"等
      */
     fun generateStory(theme: String? = null) {
-        viewModelScope.launch {
+        viewModelScope.launch {  // 启动协程执行异步操作
             // 更新为加载状态，显示加载动画
             _uiState.value = StoryUiState.Loading
             
@@ -121,6 +141,23 @@ class StoryViewModel @Inject constructor(
         ttsManager.stop()
     }
     
+    /**
+         * answerQuestion - answerQuestion方法
+         * 
+         * 功能描述：
+         * - 执行相关相关操作
+         * - 包含复杂的业务逻辑处理
+         * - 确保操作的原子性和一致性
+         * 
+         * 实现复杂度：
+         * - 方法行数: 23行
+         * - 控制流: 3个
+         * 
+         * 注意事项：
+         * - 此方法包含复杂逻辑，修改时请谨慎
+         * - 确保所有分支都有正确的错误处理
+         * - 保持代码的可读性和可维护性
+         */
     fun answerQuestion(questionId: String, answerIndex: Int) {
         val currentState = _uiState.value
         if (currentState is StoryUiState.Success) {
@@ -167,13 +204,153 @@ class StoryViewModel @Inject constructor(
         )
     }
 }
+/**
+ * StoryUiState
+ * 
+ * 功能说明：
+ * 提供StoryUiState相关的功能实现。
+ * 
+ * 技术特点：
+ * - 遵循SOLID原则
+ * - 支持依赖注入
+ * - 线程安全设计
+ * 
+ * @author AI启蒙时光团队
+ * @自版本 1.0.0
+ */
 
+
+/**
+ * StoryUiState - 故事UI状态
+ * 
+ * 功能描述：
+ * - 提供核心业务功能处理功能
+ * - 支持灵活配置、易于扩展、高性能
+ * 
+ * 设计说明：
+ * - 采用密封类层次设计
+ * - 遵循项目统一的架构规范
+ * 
+ * @since 1.0.0
+ */
 sealed class StoryUiState {
+/**
+ * 加载中
+ * 
+ * 功能说明：
+ * 提供Loading相关的功能实现。
+ * 
+ * 技术特点：
+ * - 遵循SOLID原则
+ * - 支持依赖注入
+ * - 线程安全设计
+ * 
+ * @author AI启蒙时光团队
+ * @自版本 1.0.0
+ */
+
+    /**
+     * 加载中 - 加载中
+     * 
+     * 功能描述：
+     * - 提供核心业务功能处理功能
+     * - 支持灵活配置、易于扩展、高性能
+     * 
+     * 设计说明：
+     * - 采用单例模式设计
+     * - 遵循项目统一的架构规范
+     * 
+     * @自版本 1.0.0
+     */
     object Loading : StoryUiState()
+/**
+ * 成功
+ * 
+ * 功能说明：
+ * 提供Success相关的功能实现。
+ * 
+ * 技术特点：
+ * - 遵循SOLID原则
+ * - 支持依赖注入
+ * - 线程安全设计
+ * 
+ * @author AI启蒙时光团队
+ * @自版本 1.0.0
+ */
+
+    /**
+     * 成功 - 成功
+     * 
+     * 功能描述：
+     * - 提供核心业务功能处理功能
+     * - 支持灵活配置、易于扩展、高性能
+     * 
+     * 设计说明：
+     * - 采用数据类设计
+     * - 遵循项目统一的架构规范
+     * 
+     * @自版本 1.0.0
+     */
     data class Success(val story: StoryDisplayModel) : StoryUiState()
+/**
+ * 错误
+ * 
+ * 功能说明：
+ * 提供Error相关的功能实现。
+ * 
+ * 技术特点：
+ * - 遵循SOLID原则
+ * - 支持依赖注入
+ * - 线程安全设计
+ * 
+ * @author AI启蒙时光团队
+ * @自版本 1.0.0
+ */
+
+    /**
+     * 错误 - 错误
+     * 
+     * 功能描述：
+     * - 提供核心业务功能处理功能
+     * - 支持灵活配置、易于扩展、高性能
+     * 
+     * 设计说明：
+     * - 采用数据类设计
+     * - 遵循项目统一的架构规范
+     * 
+     * @自版本 1.0.0
+     */
     data class Error(val message: String) : StoryUiState()
 }
+/**
+ * StoryDisplayModel
+ * 
+ * 功能说明：
+ * 提供StoryDisplayModel相关的功能实现。
+ * 
+ * 技术特点：
+ * - 遵循SOLID原则
+ * - 支持依赖注入
+ * - 线程安全设计
+ * 
+ * @author AI启蒙时光团队
+ * @自版本 1.0.0
+ */
 
+
+/**
+ * StoryDisplayModel - StoryDisplayModel
+ * 
+ * 功能描述：
+ * - 提供核心业务功能处理功能
+ * - 支持灵活配置、易于扩展、高性能
+ * 
+ * 设计说明：
+ * - 采用数据类设计
+ * - 遵循项目统一的架构规范
+ * 
+ * @since 1.0.0
+ */
 data class StoryDisplayModel(
     val id: String,
     val title: String,
@@ -182,7 +359,35 @@ data class StoryDisplayModel(
     val duration: Int,
     val questions: List<QuestionDisplayModel>
 )
+/**
+ * QuestionDisplayModel
+ * 
+ * 功能说明：
+ * 提供QuestionDisplayModel相关的功能实现。
+ * 
+ * 技术特点：
+ * - 遵循SOLID原则
+ * - 支持依赖注入
+ * - 线程安全设计
+ * 
+ * @author AI启蒙时光团队
+ * @自版本 1.0.0
+ */
 
+
+/**
+ * QuestionDisplayModel - QuestionDisplayModel
+ * 
+ * 功能描述：
+ * - 提供核心业务功能处理功能
+ * - 支持灵活配置、易于扩展、高性能
+ * 
+ * 设计说明：
+ * - 采用数据类设计
+ * - 遵循项目统一的架构规范
+ * 
+ * @since 1.0.0
+ */
 data class QuestionDisplayModel(
     val id: String,
     val text: String,

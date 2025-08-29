@@ -15,7 +15,14 @@ import javax.inject.Singleton
  * 负责管理和提供离线内容
  */
 @Singleton
-class OfflineContentManager @Inject constructor(
+/**
+ * OfflineContentManager - 离线内容管理器
+ * 
+ * 本地数据存储组件，提供离线数据支持
+ * 
+ * @自版本 1.0.0
+ */
+class OfflineContentManager @Inject constructor(  // 依赖注入
     @ApplicationContext private val context: Context,
     private val gson: Gson
 ) {
@@ -47,7 +54,7 @@ class OfflineContentManager @Inject constructor(
                 // 这里应该下载并保存图片
                 // 简化实现，实际应该使用图片下载库
             }
-        } catch (e: Exception) {
+        } catch (e: Exception) {  // 捕获并处理异常
             // 记录错误但不抛出，离线保存失败不应影响正常流程
         }
     }
@@ -63,11 +70,11 @@ class OfflineContentManager @Inject constructor(
                     try {
                         val json = file.readText()
                         gson.fromJson(json, Story::class.java)
-                    } catch (e: Exception) {
+                    } catch (e: Exception) {  // 捕获并处理异常
                         null
                     }
                 } ?: emptyList()
-        } catch (e: Exception) {
+        } catch (e: Exception) {  // 捕获并处理异常
             emptyList()
         }
     }
@@ -142,7 +149,7 @@ class OfflineContentManager @Inject constructor(
                 try {
                     val json = gson.toJson(story)
                     storyFile.writeText(json)
-                } catch (e: Exception) {
+                } catch (e: Exception) {  // 捕获并处理异常
                     // 忽略错误
                 }
             }

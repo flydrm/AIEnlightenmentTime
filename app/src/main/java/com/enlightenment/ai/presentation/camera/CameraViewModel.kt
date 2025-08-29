@@ -40,7 +40,27 @@ import javax.inject.Inject
  * @since 1.0.0
  */
 @HiltViewModel
-class CameraViewModel @Inject constructor(
+/**
+ * CameraViewModel - Camera视图模型
+ * 
+ * 功能职责：
+ * - 管理Camera界面的业务逻辑
+ * - 处理用户交互事件和状态更新
+ * - 协调数据层和展示层的通信
+ * 
+ * 状态管理：
+ * - 使用StateFlow管理UI状态
+ * - 支持配置变更后的状态保持
+ * - 提供状态更新的原子性保证
+ * 
+ * 生命周期：
+ * - 自动处理协程作用域
+ * - 支持数据预加载
+ * - 优雅的资源清理
+ * 
+ * @since 1.0.0
+ */
+class CameraViewModel @Inject constructor(  // 依赖注入
     private val recognizeImageUseCase: RecognizeImageUseCase
 ) : ViewModel() {
     
@@ -69,7 +89,7 @@ class CameraViewModel @Inject constructor(
      * - 识别失败：显示教育性降级内容
      */
     fun analyzeImage(imageUri: String) {
-        viewModelScope.launch {
+        viewModelScope.launch {  // 启动协程执行异步操作
             // 更新为分析中状态
             _uiState.value = CameraUiState.Analyzing
             
@@ -99,7 +119,7 @@ class CameraViewModel @Inject constructor(
                         )
                         _uiState.value = CameraUiState.Result(fallbackResult)
                     }
-            } catch (e: Exception) {
+            } catch (e: Exception) {  // 捕获并处理异常
                 // 文件访问错误：返回预览状态
                 _uiState.value = CameraUiState.Preview
             }
@@ -125,9 +145,61 @@ class CameraViewModel @Inject constructor(
  * - Analyzing: 正在分析图片，显示加载动画
  * - Result: 显示识别结果和教育信息
  */
+/**
+ * CameraUiState - 相机UI状态
+ * 
+ * 功能描述：
+ * - 提供核心业务功能处理功能
+ * - 支持灵活配置、易于扩展、高性能
+ * 
+ * 设计说明：
+ * - 采用密封类层次设计
+ * - 遵循项目统一的架构规范
+ * 
+ * @since 1.0.0
+ */
 sealed class CameraUiState {
+    /**
+     * Preview - Preview
+     * 
+     * 功能描述：
+     * - 提供核心业务功能处理功能
+     * - 支持灵活配置、易于扩展、高性能
+     * 
+     * 设计说明：
+     * - 采用单例模式设计
+     * - 遵循项目统一的架构规范
+     * 
+     * @自版本 1.0.0
+     */
     object Preview : CameraUiState()
+    /**
+     * Analyzing - Analyzing
+     * 
+     * 功能描述：
+     * - 提供核心业务功能处理功能
+     * - 支持灵活配置、易于扩展、高性能
+     * 
+     * 设计说明：
+     * - 采用单例模式设计
+     * - 遵循项目统一的架构规范
+     * 
+     * @自版本 1.0.0
+     */
     object Analyzing : CameraUiState()
+    /**
+     * Result - Result
+     * 
+     * 功能描述：
+     * - 提供核心业务功能处理功能
+     * - 支持灵活配置、易于扩展、高性能
+     * 
+     * 设计说明：
+     * - 采用数据类设计
+     * - 遵循项目统一的架构规范
+     * 
+     * @自版本 1.0.0
+     */
     data class Result(val result: RecognitionResult) : CameraUiState()
 }
 
@@ -141,6 +213,19 @@ sealed class CameraUiState {
  * @property description 物体的简单描述，适合儿童理解
  * @property funFact 有趣的知识点，增加教育价值
  * @property confidence 识别置信度（0-1），用于内部判断
+ */
+/**
+ * RecognitionResult - RecognitionResult
+ * 
+ * 功能描述：
+ * - 提供核心业务功能处理功能
+ * - 支持灵活配置、易于扩展、高性能
+ * 
+ * 设计说明：
+ * - 采用数据类设计
+ * - 遵循项目统一的架构规范
+ * 
+ * @since 1.0.0
  */
 data class RecognitionResult(
     val objectName: String,

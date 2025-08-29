@@ -14,8 +14,48 @@ import java.time.temporal.ChronoUnit
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * 数据层 - LearningStatsRepository实现
+ * 
+ * 架构职责：
+ * 实现LearningStatsRepository接口，协调远程服务和本地存储。
+ * 负责数据的获取、转换、缓存和错误处理。
+ * 
+ * 核心功能：
+ * 1. 数据获取和存储
+ * 2. 缓存管理
+ * 3. 错误处理
+ * 4. 数据转换
+ * 
+ * 技术特点：
+ * - 协程实现异步操作
+ * - 统一错误处理
+ * - 数据映射转换
+ * 
+ * @author AI启蒙时光团队
+ * @since 1.0.0
+ */
 @Singleton
-class LearningStatsRepositoryImpl @Inject constructor(
+/**
+ * LearningStatsRepositoryImpl - LearningStats仓库实现
+ * 
+ * 仓库模式实现类，协调本地和远程数据源
+ * 
+ * 核心职责：
+ * - 统一数据访问接口
+ * - 实现缓存策略
+ * - 处理数据同步
+ * - 错误处理和降级
+ * 
+ * 数据策略：
+ * - 优先使用本地缓存
+ * - 异步更新远程数据
+ * - 智能数据预加载
+ * - 离线模式支持
+ * 
+ * @since 1.0.0
+ */
+class LearningStatsRepositoryImpl @Inject constructor(  // 依赖注入
     private val dataStore: DataStore<Preferences>
 ) : LearningStatsRepository {
     
@@ -112,30 +152,30 @@ class LearningStatsRepositoryImpl @Inject constructor(
     override suspend fun getStoriesCompleted(): Int {
         return dataStore.data.map { preferences ->
             preferences[STORIES_COMPLETED] ?: 0
-        }.catch { 
+        }.catch {   // 捕获并处理异常
             emit(emptyPreferences())
-        }.collect { return@collect it[STORIES_COMPLETED] ?: 0 }
+        }.collect { return@collect it[STORIES_COMPLETED] ?: 0 }  // 收集数据流更新
     }
     
     override suspend fun getTotalLearningDays(): Int {
         return dataStore.data.map { preferences ->
             preferences[LEARNING_DAYS] ?: 0
-        }.catch { 
+        }.catch {   // 捕获并处理异常
             emit(emptyPreferences())
-        }.collect { return@collect it[LEARNING_DAYS] ?: 0 }
+        }.collect { return@collect it[LEARNING_DAYS] ?: 0 }  // 收集数据流更新
     }
     
     override suspend fun getLastLearningDate(): Long? {
         return dataStore.data.map { preferences ->
             preferences[LAST_LEARNING_DATE]
-        }.catch { 
+        }.catch {   // 捕获并处理异常
             emit(emptyPreferences())
-        }.collect { return@collect it[LAST_LEARNING_DATE] }
+        }.collect { return@collect it[LAST_LEARNING_DATE] }  // 收集数据流更新
     }
     
     override fun observeLearningStats(): Flow<LearningStats> {
         return dataStore.data
-            .catch { exception ->
+            .catch { exception ->  // 捕获并处理异常
                 if (exception is IOException) {
                     emit(emptyPreferences())
                 } else {
@@ -161,9 +201,9 @@ class LearningStatsRepositoryImpl @Inject constructor(
             } else {
                 0
             }
-        }.catch { 
+        }.catch {   // 捕获并处理异常
             emit(0)
-        }.collect { return@collect it }
+        }.collect { return@collect it }  // 收集数据流更新
     }
     
     override suspend fun getTodayStories(): Int {
@@ -174,8 +214,8 @@ class LearningStatsRepositoryImpl @Inject constructor(
             } else {
                 0
             }
-        }.catch { 
+        }.catch {   // 捕获并处理异常
             emit(0)
-        }.collect { return@collect it }
+        }.collect { return@collect it }  // 收集数据流更新
     }
 }

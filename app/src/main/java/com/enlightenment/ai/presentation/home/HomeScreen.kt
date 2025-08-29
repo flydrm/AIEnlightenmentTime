@@ -46,7 +46,7 @@ import com.enlightenment.ai.presentation.theme.*
  * @since 1.0.0
  */
 @Composable
-fun HomeScreen(
+fun HomeScreen(  // 可组合UI组件
     onNavigateToStory: () -> Unit,
     onNavigateToDialogue: () -> Unit,
     onNavigateToCamera: () -> Unit,
@@ -130,7 +130,7 @@ fun HomeScreen(
             
             Spacer(modifier = Modifier.weight(1f))
             
-            // Parent entrance
+            // 家长 entrance
             TextButton(
                 onClick = onNavigateToParentLogin,
                 modifier = Modifier.padding(bottom = 16.dp)
@@ -170,7 +170,7 @@ fun HomeScreen(
  * @param onClick 点击回调函数
  */
 @Composable
-private fun FunctionCard(
+private fun FunctionCard(  // 可组合UI组件
     title: String,
     emoji: String,
     backgroundColor: Color,

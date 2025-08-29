@@ -33,6 +33,18 @@ import java.util.UUID
  * @author AI启蒙时光团队
  * @since 1.0.0
  */
+/**
+ * Story - Story
+ * 
+ * 领域数据模型，表示业务概念和规则
+ * 
+ * 模型特点：
+ * - 不可变数据设计
+ * - 业务逻辑封装
+ * - 领域规则验证
+ * 
+ * @since 1.0.0
+ */
 data class Story(
     val id: String = UUID.randomUUID().toString(),
     val title: String,
@@ -63,6 +75,18 @@ data class Story(
  * @property correctAnswerIndex 正确答案索引（0开始）
  * @property explanation 答案解释，用于教育引导
  */
+/**
+ * Question - Question
+ * 
+ * 领域数据模型，表示业务概念和规则
+ * 
+ * 模型特点：
+ * - 不可变数据设计
+ * - 业务逻辑封装
+ * - 领域规则验证
+ * 
+ * @since 1.0.0
+ */
 data class Question(
     val id: String = UUID.randomUUID().toString(),
     val text: String,
@@ -88,6 +112,18 @@ data class Question(
  * @property interests 兴趣爱好列表，如"恐龙"、"公主"等
  * @property favoriteColor 喜欢的颜色，用于场景描述
  * @property familyMembers 家庭成员，可作为故事配角
+ */
+/**
+ * PersonalizedElements - PersonalizedElements
+ * 
+ * 领域数据模型，表示业务概念和规则
+ * 
+ * 模型特点：
+ * - 不可变数据设计
+ * - 业务逻辑封装
+ * - 领域规则验证
+ * 
+ * @自版本 1.0.0
  */
 data class PersonalizedElements(
     val childName: String? = null,

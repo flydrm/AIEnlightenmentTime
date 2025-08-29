@@ -35,7 +35,27 @@ import javax.inject.Inject
  * @since 1.0.0
  */
 @HiltViewModel
-class HomeViewModel @Inject constructor(
+/**
+ * HomeViewModel - Home视图模型
+ * 
+ * 功能职责：
+ * - 管理Home界面的业务逻辑
+ * - 处理用户交互事件和状态更新
+ * - 协调数据层和展示层的通信
+ * 
+ * 状态管理：
+ * - 使用StateFlow管理UI状态
+ * - 支持配置变更后的状态保持
+ * - 提供状态更新的原子性保证
+ * 
+ * 生命周期：
+ * - 自动处理协程作用域
+ * - 支持数据预加载
+ * - 优雅的资源清理
+ * 
+ * @since 1.0.0
+ */
+class HomeViewModel @Inject constructor(  // 依赖注入
     private val profileRepository: ProfileRepository
 ) : ViewModel() {
     
@@ -65,12 +85,12 @@ class HomeViewModel @Inject constructor(
      * - 节日特殊问候
      */
     private fun loadProfile() {
-        viewModelScope.launch {
+        viewModelScope.launch {  // 启动协程执行异步操作
             // 从仓库获取档案
             val profile = profileRepository.getProfile()
             
             // 更新UI状态
-            _uiState.update { currentState ->
+            _uiState.update { currentState ->  // 更新UI状态
                 currentState.copy(
                     greeting = if (profile != null) {
                         "嗨，${profile.name}！今天想学什么呢？"
@@ -93,6 +113,19 @@ class HomeViewModel @Inject constructor(
  * @property greeting 个性化问候语
  * @property pandaMood 小熊猫表情状态（happy/curious/excited等）
  * @property isLoading 页面加载状态，预留给未来使用
+ */
+/**
+ * HomeUiState - 主页UI状态
+ * 
+ * 功能描述：
+ * - 提供核心业务功能处理功能
+ * - 支持灵活配置、易于扩展、高性能
+ * 
+ * 设计说明：
+ * - 采用数据类设计
+ * - 遵循项目统一的架构规范
+ * 
+ * @since 1.0.0
  */
 data class HomeUiState(
     val greeting: String = "嗨，小朋友！",

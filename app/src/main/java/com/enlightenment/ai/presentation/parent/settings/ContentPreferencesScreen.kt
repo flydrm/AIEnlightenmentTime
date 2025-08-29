@@ -13,9 +13,45 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
+/**
+ * 内容偏好设置界面
+ * 
+ * 功能说明：
+ * 内容偏好和过滤设置。
+ * 选择合适的内容类型、难度级别、主题偏好等。
+ * 
+ * UI布局：
+ * 1. 顶部栏：标题和导航按钮
+ * 2. 内容区域：主要功能展示
+ * 3. 操作区域：用户交互控件
+ * 
+ * 交互设计：
+ * - 响应式布局：适配不同屏幕尺寸
+ * - 即时反馈：操作后立即显示结果
+ * - 错误处理：友好的错误提示
+ * - 加载状态：异步操作时显示进度
+ * 
+ * 用户体验优化：
+ * - 简洁明了的界面设计
+ * - 符合Material Design规范
+ * - 支持手势操作
+ * - 无障碍支持
+ * 
+ * 技术特点：
+ * - Jetpack Compose声明式UI
+ * - StateFlow状态管理
+ * - 协程处理异步操作
+ * - MVVM架构模式
+ * 
+ * @param onNavigateBack 返回导航回调
+ * @param viewModel 界面对应的ViewModel
+ * 
+ * @author AI启蒙时光团队
+ * @since 1.0.0
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ContentPreferencesScreen(
+fun ContentPreferencesScreen(  // 可组合UI组件
     onNavigateBack: () -> Unit,
     viewModel: ContentPreferencesViewModel = hiltViewModel()
 ) {

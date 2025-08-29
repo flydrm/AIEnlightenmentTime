@@ -17,9 +17,40 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.enlightenment.ai.presentation.theme.CreamBackground
 
+/**
+ * 个人档案界面
+ * 
+ * 功能说明：
+ * 展示和编辑儿童的个人资料，包括基本信息、学习统计和兴趣爱好。
+ * 支持档案的创建和更新，提供个性化学习的基础数据。
+ * 
+ * UI布局：
+ * 1. 顶部栏：标题和返回按钮
+ * 2. 档案编辑区：姓名、年龄、兴趣等信息
+ * 3. 学习统计：展示学习成就和进度
+ * 4. 操作按钮：保存或创建档案
+ * 
+ * 交互特点：
+ * - 表单验证：确保输入合法性
+ * - 即时保存：修改后自动保存
+ * - 数据可视化：图表展示学习数据
+ * - 兴趣选择：预设标签快速选择
+ * 
+ * 用户体验：
+ * - 简化输入：使用选择器代替文本输入
+ * - 视觉反馈：保存成功提示
+ * - 数据保护：本地存储，隐私安全
+ * - 友好引导：首次使用有创建提示
+ * 
+ * @param onNavigateBack 返回上一页的回调
+ * @param viewModel 档案界面的ViewModel
+ * 
+ * @author AI启蒙时光团队
+ * @since 1.0.0
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen(
+fun ProfileScreen(  // 可组合UI组件
     onNavigateBack: () -> Unit,
     viewModel: ProfileViewModel = hiltViewModel()
 ) {
@@ -48,7 +79,7 @@ fun ProfileScreen(
                 .padding(paddingValues)
                 .background(CreamBackground)
         ) {
-            when (val state = uiState) {
+            when (val state = uiState) {  // 根据条件进行分支处理
                 is ProfileUiState.Loading -> {
                     CircularProgressIndicator(
                         modifier = Modifier.align(Alignment.Center)
@@ -77,7 +108,7 @@ fun ProfileScreen(
 }
 
 @Composable
-private fun ProfileSetupForm(
+private fun ProfileSetupForm(  // 可组合UI组件
     onSaveProfile: (String, Int) -> Unit
 ) {
     var name by remember { mutableStateOf("") }
@@ -138,7 +169,7 @@ private fun ProfileSetupForm(
 }
 
 @Composable
-private fun ProfileContent(
+private fun ProfileContent(  // 可组合UI组件
     profile: ProfileDisplayModel,
     onUpdateInterests: (List<String>) -> Unit
 ) {
@@ -276,7 +307,7 @@ private fun ProfileContent(
 
 @ExperimentalLayoutApi
 @Composable
-fun FlowRow(
+fun FlowRow(  // 可组合UI组件
     modifier: Modifier = Modifier,
     horizontalArrangement: Arrangement.Horizontal = Arrangement.Start,
     verticalArrangement: Arrangement.Vertical = Arrangement.Top,

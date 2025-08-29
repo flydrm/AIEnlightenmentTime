@@ -35,12 +35,12 @@ echo "1️⃣ 检查类/接口注释..."
 while IFS= read -r file; do
     TOTAL_FILES=$((TOTAL_FILES + 1))
     
-    # 检查是否有类级别的注释
-    if grep -B10 "^class\|^interface\|^object\|^enum" "$file" | grep -q "^\s*\*/"; then
+    # 检查是否有类级别的注释（改进版：支持缩进的类定义）
+    if grep -B10 "^\s*\(class\|interface\|object\|enum\|data class\|sealed class\)" "$file" | grep -q "^\s*\*/"; then
         FILES_WITH_COMMENT=$((FILES_WITH_COMMENT + 1))
     else
         # 获取类名
-        CLASS_NAME=$(grep -E "^(class|interface|object|enum)" "$file" | head -1 | awk '{print $2}')
+        CLASS_NAME=$(grep -E "^\s*(class|interface|object|enum|data class|sealed class)" "$file" | head -1 | awk '{print $2}')
         if [ ! -z "$CLASS_NAME" ]; then
             MISSING_COMMENTS="${MISSING_COMMENTS}\n  - $file ($CLASS_NAME)"
         fi

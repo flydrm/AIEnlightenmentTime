@@ -23,6 +23,23 @@ import kotlinx.coroutines.flow.Flow
  * @author AI启蒙时光团队
  * @since 1.0.0
  */
+/**
+ * StoryRepository - Story仓库
+ * 
+ * 仓库接口定义，抽象数据访问操作
+ * 
+ * 接口设计：
+ * - 定义数据访问契约
+ * - 隐藏数据源实现细节
+ * - 支持依赖注入
+ * 
+ * 实现要求：
+ * - 线程安全
+ * - 错误处理
+ * - 资源管理
+ * 
+ * @since 1.0.0
+ */
 interface StoryRepository {
     /**
      * 生成AI故事

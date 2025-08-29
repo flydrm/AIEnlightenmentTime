@@ -50,7 +50,7 @@ import com.enlightenment.ai.presentation.theme.CreamBackground
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun StoryScreen(
+fun StoryScreen(  // 可组合UI组件
     onNavigateBack: () -> Unit,
     viewModel: StoryViewModel = hiltViewModel()
 ) {
@@ -79,7 +79,7 @@ fun StoryScreen(
                 .padding(paddingValues)
                 .background(CreamBackground)
         ) {
-            when (val state = uiState) {
+            when (val state = uiState) {  // 根据条件进行分支处理
                 is StoryUiState.Loading -> {
                     LoadingAnimation(
                         message = "小熊猫正在创作精彩的故事...",
@@ -110,7 +110,7 @@ fun StoryScreen(
 }
 
 @Composable
-private fun StoryContent(
+private fun StoryContent(  // 可组合UI组件
     story: StoryDisplayModel,
     onPlayAudio: () -> Unit,
     onAnswerQuestion: (String, Int) -> Unit
@@ -121,7 +121,7 @@ private fun StoryContent(
             .verticalScroll(rememberScrollState())
             .padding(16.dp)
     ) {
-        // Story image
+        // 故事 图片
         story.imageUrl?.let { url ->
             Card(
                 modifier = Modifier
@@ -138,7 +138,7 @@ private fun StoryContent(
             Spacer(modifier = Modifier.height(16.dp))
         }
         
-        // Story title
+        // 故事 title
         Text(
             text = story.title,
             style = MaterialTheme.typography.headlineMedium,
@@ -148,7 +148,7 @@ private fun StoryContent(
         
         Spacer(modifier = Modifier.height(16.dp))
         
-        // Story content
+        // 故事 content
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(
@@ -165,7 +165,7 @@ private fun StoryContent(
         
         Spacer(modifier = Modifier.height(16.dp))
         
-        // Play button
+        // Play 按钮
         Button(
             onClick = onPlayAudio,
             modifier = Modifier.fillMaxWidth(),
@@ -198,7 +198,7 @@ private fun StoryContent(
 }
 
 @Composable
-private fun QuestionCard(
+private fun QuestionCard(  // 可组合UI组件
     question: QuestionDisplayModel,
     onAnswerSelected: (Int) -> Unit
 ) {
@@ -259,7 +259,7 @@ private fun QuestionCard(
 }
 
 @Composable
-private fun ErrorContent(
+private fun ErrorContent(  // 可组合UI组件
     message: String,
     onRetry: () -> Unit,
     modifier: Modifier = Modifier

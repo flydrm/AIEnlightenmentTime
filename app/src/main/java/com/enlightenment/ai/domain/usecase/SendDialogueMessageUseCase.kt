@@ -35,7 +35,24 @@ import javax.inject.Inject
  * @author AI启蒙时光团队
  * @since 1.0.0
  */
-class SendDialogueMessageUseCase @Inject constructor(
+/**
+ * SendDialogueMessageUseCase - SendDialogueMessage用例
+ * 
+ * 业务用例类，封装特定的业务操作流程
+ * 
+ * 用例职责：
+ * - 协调多个仓库的数据操作
+ * - 实现复杂的业务规则
+ * - 保证业务事务的一致性
+ * 
+ * 设计原则：
+ * - 单一职责原则
+ * - 与UI层解耦
+ * - 可测试性设计
+ * 
+ * @since 1.0.0
+ */
+class SendDialogueMessageUseCase @Inject constructor(  // 依赖注入
     private val dialogueRepository: DialogueRepository,
     private val profileRepository: ProfileRepository
 ) {

@@ -47,7 +47,26 @@ import javax.inject.Singleton
  * @since 1.0.0
  */
 @Singleton
-class StoryRepositoryImpl @Inject constructor(
+/**
+ * StoryRepositoryImpl - Story仓库实现
+ * 
+ * 仓库模式实现类，协调本地和远程数据源
+ * 
+ * 核心职责：
+ * - 统一数据访问接口
+ * - 实现缓存策略
+ * - 处理数据同步
+ * - 错误处理和降级
+ * 
+ * 数据策略：
+ * - 优先使用本地缓存
+ * - 异步更新远程数据
+ * - 智能数据预加载
+ * - 离线模式支持
+ * 
+ * @since 1.0.0
+ */
+class StoryRepositoryImpl @Inject constructor(  // 依赖注入
     private val apiService: AIApiService,
     private val storyDao: StoryDao,
     private val gson: Gson
@@ -114,12 +133,12 @@ class StoryRepositoryImpl @Inject constructor(
                 childAge = childAge
             )
             
-            // Save to local database
+            // Save to local 数据库
             saveStory(story)
             
             Result.success(story)
-        } catch (e: Exception) {
-            // Try to get from cache if network fails
+        } catch (e: Exception) {  // 捕获并处理异常
+            // Try to get from 缓存 if 网络 fails
             val cachedStories = getCachedStories()
             if (cachedStories.isNotEmpty()) {
                 Result.success(cachedStories.random())
@@ -183,7 +202,7 @@ class StoryRepositoryImpl @Inject constructor(
                     explanation = q.explanation
                 )
             }
-        } catch (e: Exception) {
+        } catch (e: Exception) {  // 捕获并处理异常
             emptyList<Question>()
         }
         

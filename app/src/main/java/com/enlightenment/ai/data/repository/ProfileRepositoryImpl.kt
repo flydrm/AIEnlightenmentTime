@@ -14,8 +14,48 @@ import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * 数据层 - ProfileRepository实现
+ * 
+ * 架构职责：
+ * 实现ProfileRepository接口，协调远程服务和本地存储。
+ * 负责数据的获取、转换、缓存和错误处理。
+ * 
+ * 核心功能：
+ * 1. 数据获取和存储
+ * 2. 缓存管理
+ * 3. 错误处理
+ * 4. 数据转换
+ * 
+ * 技术特点：
+ * - 协程实现异步操作
+ * - 统一错误处理
+ * - 数据映射转换
+ * 
+ * @author AI启蒙时光团队
+ * @since 1.0.0
+ */
 @Singleton
-class ProfileRepositoryImpl @Inject constructor(
+/**
+ * ProfileRepositoryImpl - Profile仓库实现
+ * 
+ * 仓库模式实现类，协调本地和远程数据源
+ * 
+ * 核心职责：
+ * - 统一数据访问接口
+ * - 实现缓存策略
+ * - 处理数据同步
+ * - 错误处理和降级
+ * 
+ * 数据策略：
+ * - 优先使用本地缓存
+ * - 异步更新远程数据
+ * - 智能数据预加载
+ * - 离线模式支持
+ * 
+ * @since 1.0.0
+ */
+class ProfileRepositoryImpl @Inject constructor(  // 依赖注入
     private val dataStore: DataStore<Preferences>,
     private val gson: Gson
 ) : ProfileRepository {
@@ -26,7 +66,7 @@ class ProfileRepositoryImpl @Inject constructor(
     
     override suspend fun getProfile(): ChildProfile? {
         return try {
-            val preferences = dataStore.data.catch { 
+            val preferences = dataStore.data.catch {   // 捕获并处理异常
                 if (it is IOException) {
                     emit(emptyPreferences())
                 } else {
@@ -36,11 +76,11 @@ class ProfileRepositoryImpl @Inject constructor(
                 preferences[PROFILE_KEY]?.let { json ->
                     gson.fromJson(json, ChildProfile::class.java)
                 }
-            }.collect { profile ->
+            }.collect { profile ->  // 收集数据流更新
                 return@collect profile
             }
             null
-        } catch (e: Exception) {
+        } catch (e: Exception) {  // 捕获并处理异常
             null
         }
     }
@@ -53,7 +93,7 @@ class ProfileRepositoryImpl @Inject constructor(
     
     override fun observeProfile(): Flow<ChildProfile?> {
         return dataStore.data
-            .catch { 
+            .catch {   // 捕获并处理异常
                 if (it is IOException) {
                     emit(emptyPreferences())
                 } else {

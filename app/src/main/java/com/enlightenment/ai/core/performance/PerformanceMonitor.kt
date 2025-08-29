@@ -13,7 +13,25 @@ import javax.inject.Singleton
  * 跟踪应用的关键性能指标
  */
 @Singleton
-class PerformanceMonitor @Inject constructor() {
+/**
+ * PerformanceMonitor - 性能监控器
+ * 
+ * 性能监控组件，实时跟踪应用性能指标
+ * 
+ * 监控指标：
+ * - 启动时间和冷启动优化
+ * - 内存使用和泄漏检测
+ * - 帧率和卡顿监控
+ * - 网络请求性能
+ * 
+ * 优化建议：
+ * - 自动性能报告生成
+ * - 性能瓶颈定位
+ * - 优化建议推送
+ * 
+ * @since 1.0.0
+ */
+class PerformanceMonitor @Inject constructor() {  // 依赖注入
     
     private val _metrics = MutableStateFlow(PerformanceMetrics())
     val metrics: StateFlow<PerformanceMetrics> = _metrics.asStateFlow()
@@ -115,7 +133,40 @@ class PerformanceMonitor @Inject constructor() {
         private const val MEMORY_WARNING_THRESHOLD = 0.8f // 80%内存使用率
     }
 }
+/**
+ * PerformanceMetrics
+ * 
+ * 功能说明：
+ * 提供PerformanceMetrics相关的功能实现。
+ * 
+ * 技术特点：
+ * - 遵循SOLID原则
+ * - 支持依赖注入
+ * - 线程安全设计
+ * 
+ * @author AI启蒙时光团队
+ * @自版本 1.0.0
+ */
 
+
+/**
+ * PerformanceMetrics - PerformanceMetrics
+ * 
+ * 性能监控组件，实时跟踪应用性能指标
+ * 
+ * 监控指标：
+ * - 启动时间和冷启动优化
+ * - 内存使用和泄漏检测
+ * - 帧率和卡顿监控
+ * - 网络请求性能
+ * 
+ * 优化建议：
+ * - 自动性能报告生成
+ * - 性能瓶颈定位
+ * - 优化建议推送
+ * 
+ * @since 1.0.0
+ */
 data class PerformanceMetrics(
     val lastOperationDuration: Long = 0,
     val operationHistory: List<OperationMetric> = emptyList(),
@@ -123,20 +174,119 @@ data class PerformanceMetrics(
     val maxMemoryMB: Int = 0,
     val networkRequests: List<NetworkMetric> = emptyList()
 )
+/**
+ * OperationMetric
+ * 
+ * 功能说明：
+ * 提供OperationMetric相关的功能实现。
+ * 
+ * 技术特点：
+ * - 遵循SOLID原则
+ * - 支持依赖注入
+ * - 线程安全设计
+ * 
+ * @author AI启蒙时光团队
+ * @自版本 1.0.0
+ */
 
+
+/**
+ * OperationMetric - OperationMetric
+ * 
+ * 性能监控组件，实时跟踪应用性能指标
+ * 
+ * 监控指标：
+ * - 启动时间和冷启动优化
+ * - 内存使用和泄漏检测
+ * - 帧率和卡顿监控
+ * - 网络请求性能
+ * 
+ * 优化建议：
+ * - 自动性能报告生成
+ * - 性能瓶颈定位
+ * - 优化建议推送
+ * 
+ * @since 1.0.0
+ */
 data class OperationMetric(
     val name: String,
     val duration: Long,
     val timestamp: Long
 )
+/**
+ * NetworkMetric
+ * 
+ * 功能说明：
+ * 提供NetworkMetric相关的功能实现。
+ * 
+ * 技术特点：
+ * - 遵循SOLID原则
+ * - 支持依赖注入
+ * - 线程安全设计
+ * 
+ * @author AI启蒙时光团队
+ * @自版本 1.0.0
+ */
 
+
+/**
+ * NetworkMetric - NetworkMetric
+ * 
+ * 性能监控组件，实时跟踪应用性能指标
+ * 
+ * 监控指标：
+ * - 启动时间和冷启动优化
+ * - 内存使用和泄漏检测
+ * - 帧率和卡顿监控
+ * - 网络请求性能
+ * 
+ * 优化建议：
+ * - 自动性能报告生成
+ * - 性能瓶颈定位
+ * - 优化建议推送
+ * 
+ * @since 1.0.0
+ */
 data class NetworkMetric(
     val url: String,
     val duration: Long,
     val success: Boolean,
     val timestamp: Long
 )
+/**
+ * PerformanceReport
+ * 
+ * 功能说明：
+ * 提供PerformanceReport相关的功能实现。
+ * 
+ * 技术特点：
+ * - 遵循SOLID原则
+ * - 支持依赖注入
+ * - 线程安全设计
+ * 
+ * @author AI启蒙时光团队
+ * @自版本 1.0.0
+ */
 
+
+/**
+ * PerformanceReport - PerformanceReport
+ * 
+ * 性能监控组件，实时跟踪应用性能指标
+ * 
+ * 监控指标：
+ * - 启动时间和冷启动优化
+ * - 内存使用和泄漏检测
+ * - 帧率和卡顿监控
+ * - 网络请求性能
+ * 
+ * 优化建议：
+ * - 自动性能报告生成
+ * - 性能瓶颈定位
+ * - 优化建议推送
+ * 
+ * @since 1.0.0
+ */
 data class PerformanceReport(
     val avgOperationTimeMs: Long,
     val memoryUsagePercent: Int,

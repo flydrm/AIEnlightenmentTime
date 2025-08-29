@@ -16,9 +16,45 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.enlightenment.ai.presentation.theme.CreamBackground
 
+/**
+ * 家长中心界面
+ * 
+ * 功能说明：
+ * 家长管理中心，查看孩子学习情况和进行各项设置。
+ * 包含学习报告、时间管理、内容设置等功能。
+ * 
+ * UI布局：
+ * 1. 顶部栏：标题和导航按钮
+ * 2. 内容区域：主要功能展示
+ * 3. 操作区域：用户交互控件
+ * 
+ * 交互设计：
+ * - 响应式布局：适配不同屏幕尺寸
+ * - 即时反馈：操作后立即显示结果
+ * - 错误处理：友好的错误提示
+ * - 加载状态：异步操作时显示进度
+ * 
+ * 用户体验优化：
+ * - 简洁明了的界面设计
+ * - 符合Material Design规范
+ * - 支持手势操作
+ * - 无障碍支持
+ * 
+ * 技术特点：
+ * - Jetpack Compose声明式UI
+ * - StateFlow状态管理
+ * - 协程处理异步操作
+ * - MVVM架构模式
+ * 
+ * @param onNavigateBack 返回导航回调
+ * @param viewModel 界面对应的ViewModel
+ * 
+ * @author AI启蒙时光团队
+ * @since 1.0.0
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ParentDashboardScreen(
+fun ParentDashboardScreen(  // 可组合UI组件
     onNavigateBack: () -> Unit,
     onNavigateToTimeLimitSettings: () -> Unit = {},
     onNavigateToContentPreferences: () -> Unit = {},
@@ -29,9 +65,9 @@ fun ParentDashboardScreen(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     
-    // Handle navigation events
+    // Handle 导航 events
     LaunchedEffect(uiState.navigationEvent) {
-        when (uiState.navigationEvent) {
+        when (uiState.navigationEvent) {  // 根据条件进行分支处理
             is NavigationEvent.TimeLimitSettings -> {
                 onNavigateToTimeLimitSettings()
                 viewModel.clearNavigationEvent()
@@ -127,7 +163,7 @@ fun ParentDashboardScreen(
 }
 
 @Composable
-private fun LearningOverviewCard(stats: ParentDashboardStats) {
+private fun LearningOverviewCard(stats: ParentDashboardStats) {  // 可组合UI组件
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -186,7 +222,7 @@ private fun LearningOverviewCard(stats: ParentDashboardStats) {
 }
 
 @Composable
-private fun StatItem(
+private fun StatItem(  // 可组合UI组件
     label: String,
     value: String,
     icon: ImageVector
@@ -215,7 +251,7 @@ private fun StatItem(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun ParentFeatureCard(
+private fun ParentFeatureCard(  // 可组合UI组件
     icon: ImageVector,
     title: String,
     description: String,

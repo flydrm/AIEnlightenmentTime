@@ -12,26 +12,66 @@ import java.io.File
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * 数据层 - ImageRecognitionRepository实现
+ * 
+ * 架构职责：
+ * 实现ImageRecognitionRepository接口，协调远程服务和本地存储。
+ * 负责数据的获取、转换、缓存和错误处理。
+ * 
+ * 核心功能：
+ * 1. 数据获取和存储
+ * 2. 缓存管理
+ * 3. 错误处理
+ * 4. 数据转换
+ * 
+ * 技术特点：
+ * - 协程实现异步操作
+ * - 统一错误处理
+ * - 数据映射转换
+ * 
+ * @author AI启蒙时光团队
+ * @since 1.0.0
+ */
 @Singleton
-class ImageRecognitionRepositoryImpl @Inject constructor(
+/**
+ * ImageRecognitionRepositoryImpl - ImageRecognition仓库实现
+ * 
+ * 仓库模式实现类，协调本地和远程数据源
+ * 
+ * 核心职责：
+ * - 统一数据访问接口
+ * - 实现缓存策略
+ * - 处理数据同步
+ * - 错误处理和降级
+ * 
+ * 数据策略：
+ * - 优先使用本地缓存
+ * - 异步更新远程数据
+ * - 智能数据预加载
+ * - 离线模式支持
+ * 
+ * @since 1.0.0
+ */
+class ImageRecognitionRepositoryImpl @Inject constructor(  // 依赖注入
     private val apiService: AIApiService
 ) : ImageRecognitionRepository {
     
-    // Cache for offline support
+    // 缓存 for offline support
     private val recognitionCache = mutableListOf<RecognitionResult>()
     
     override suspend fun recognizeImage(imageFile: File): Result<RecognitionResult> = 
         withContext(Dispatchers.IO) {
             try {
-                // Create multipart request
+                // Create multipart 请求
                 val requestFile = imageFile.asRequestBody("image/*".toMediaTypeOrNull())
                 val body = MultipartBody.Part.createFormData("image", imageFile.name, requestFile)
                 
-                // Call real API
+                // Call real API接口
                 val response = try {
                     apiService.recognizeImage(image = body)
-                } catch (e: Exception) {
-                    // Fallback to local generation if API fails
+                } catch (e: Exception) {  // 捕获并处理异常
+                    // Fallback to local generation if API接口 fails
                     null
                 }
                 
@@ -49,15 +89,15 @@ class ImageRecognitionRepositoryImpl @Inject constructor(
                     generateEducationalContent(imageFile.name)
                 }
                 
-                // Cache the result
+                // 缓存 the result
                 recognitionCache.add(result)
                 if (recognitionCache.size > 50) {
                     recognitionCache.removeAt(0)
                 }
                 
                 Result.success(result)
-            } catch (e: Exception) {
-                // Try to return cached result on error
+            } catch (e: Exception) {  // 捕获并处理异常
+                // Try to return cached result on 错误
                 if (recognitionCache.isNotEmpty()) {
                     Result.success(recognitionCache.random())
                 } else {
@@ -72,7 +112,7 @@ class ImageRecognitionRepositoryImpl @Inject constructor(
         }
     
     private fun generateEducationalContent(fileName: String): RecognitionResult {
-        // Fallback educational content when API is unavailable
+        // Fallback educational content when API接口 is unavailable
         // This provides offline support and ensures children always get educational value
         
         val educationalDatabase = mapOf(

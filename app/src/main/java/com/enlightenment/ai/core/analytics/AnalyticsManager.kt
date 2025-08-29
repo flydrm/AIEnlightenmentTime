@@ -24,7 +24,25 @@ private val Context.analyticsDataStore: DataStore<Preferences> by preferencesDat
  * 负责用户行为分析和崩溃报告（隐私优先）
  */
 @Singleton
-class AnalyticsManager @Inject constructor(
+/**
+ * AnalyticsManager - 分析管理器
+ * 
+ * 分析管理组件，收集和分析用户行为数据
+ * 
+ * 分析功能：
+ * - 用户行为追踪
+ * - 使用模式分析
+ * - 崩溃和错误报告
+ * - 性能指标统计
+ * 
+ * 隐私保护：
+ * - 匿名数据收集
+ * - 用户同意机制
+ * - 数据最小化原则
+ * 
+ * @since 1.0.0
+ */
+class AnalyticsManager @Inject constructor(  // 依赖注入
     @ApplicationContext private val context: Context
 ) {
     
@@ -209,7 +227,7 @@ class AnalyticsManager @Inject constructor(
             context.packageManager
                 .getPackageInfo(context.packageName, 0)
                 .versionName
-        } catch (e: Exception) {
+        } catch (e: Exception) {  // 捕获并处理异常
             "unknown"
         }
     }
@@ -229,14 +247,80 @@ class AnalyticsManager @Inject constructor(
         private val USER_ID_KEY = stringPreferencesKey("user_id")
     }
 }
+/**
+ * AnalyticsEvent
+ * 
+ * 功能说明：
+ * 提供AnalyticsEvent相关的功能实现。
+ * 
+ * 技术特点：
+ * - 遵循SOLID原则
+ * - 支持依赖注入
+ * - 线程安全设计
+ * 
+ * @author AI启蒙时光团队
+ * @自版本 1.0.0
+ */
 
+
+/**
+ * AnalyticsEvent - AnalyticsEvent
+ * 
+ * 分析管理组件，收集和分析用户行为数据
+ * 
+ * 分析功能：
+ * - 用户行为追踪
+ * - 使用模式分析
+ * - 崩溃和错误报告
+ * - 性能指标统计
+ * 
+ * 隐私保护：
+ * - 匿名数据收集
+ * - 用户同意机制
+ * - 数据最小化原则
+ * 
+ * @since 1.0.0
+ */
 data class AnalyticsEvent(
     val name: String,
     val params: Map<String, Any>,
     val timestamp: Long,
     val userId: String
 )
+/**
+ * ErrorEvent
+ * 
+ * 功能说明：
+ * 提供ErrorEvent相关的功能实现。
+ * 
+ * 技术特点：
+ * - 遵循SOLID原则
+ * - 支持依赖注入
+ * - 线程安全设计
+ * 
+ * @author AI启蒙时光团队
+ * @自版本 1.0.0
+ */
 
+
+/**
+ * ErrorEvent - ErrorEvent
+ * 
+ * 分析管理组件，收集和分析用户行为数据
+ * 
+ * 分析功能：
+ * - 用户行为追踪
+ * - 使用模式分析
+ * - 崩溃和错误报告
+ * - 性能指标统计
+ * 
+ * 隐私保护：
+ * - 匿名数据收集
+ * - 用户同意机制
+ * - 数据最小化原则
+ * 
+ * @since 1.0.0
+ */
 data class ErrorEvent(
     val message: String,
     val stackTrace: String,
@@ -244,13 +328,79 @@ data class ErrorEvent(
     val timestamp: Long,
     val userId: String
 )
+/**
+ * CrashReport
+ * 
+ * 功能说明：
+ * 提供CrashReport相关的功能实现。
+ * 
+ * 技术特点：
+ * - 遵循SOLID原则
+ * - 支持依赖注入
+ * - 线程安全设计
+ * 
+ * @author AI启蒙时光团队
+ * @自版本 1.0.0
+ */
 
+
+/**
+ * CrashReport - CrashReport
+ * 
+ * 分析管理组件，收集和分析用户行为数据
+ * 
+ * 分析功能：
+ * - 用户行为追踪
+ * - 使用模式分析
+ * - 崩溃和错误报告
+ * - 性能指标统计
+ * 
+ * 隐私保护：
+ * - 匿名数据收集
+ * - 用户同意机制
+ * - 数据最小化原则
+ * 
+ * @since 1.0.0
+ */
 data class CrashReport(
     val errors: List<ErrorEvent>,
     val deviceInfo: DeviceInfo,
     val timestamp: Long
 )
+/**
+ * DeviceInfo
+ * 
+ * 功能说明：
+ * 提供DeviceInfo相关的功能实现。
+ * 
+ * 技术特点：
+ * - 遵循SOLID原则
+ * - 支持依赖注入
+ * - 线程安全设计
+ * 
+ * @author AI启蒙时光团队
+ * @自版本 1.0.0
+ */
 
+
+/**
+ * DeviceInfo - DeviceInfo
+ * 
+ * 分析管理组件，收集和分析用户行为数据
+ * 
+ * 分析功能：
+ * - 用户行为追踪
+ * - 使用模式分析
+ * - 崩溃和错误报告
+ * - 性能指标统计
+ * 
+ * 隐私保护：
+ * - 匿名数据收集
+ * - 用户同意机制
+ * - 数据最小化原则
+ * 
+ * @since 1.0.0
+ */
 data class DeviceInfo(
     val model: String,
     val osVersion: Int,
@@ -259,6 +409,24 @@ data class DeviceInfo(
 
 /**
  * 崩溃处理器
+ */
+/**
+ * CrashHandler - CrashHandler
+ * 
+ * 分析管理组件，收集和分析用户行为数据
+ * 
+ * 分析功能：
+ * - 用户行为追踪
+ * - 使用模式分析
+ * - 崩溃和错误报告
+ * - 性能指标统计
+ * 
+ * 隐私保护：
+ * - 匿名数据收集
+ * - 用户同意机制
+ * - 数据最小化原则
+ * 
+ * @since 1.0.0
  */
 class CrashHandler(
     private val analyticsManager: AnalyticsManager

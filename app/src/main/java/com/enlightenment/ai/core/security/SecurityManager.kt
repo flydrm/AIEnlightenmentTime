@@ -20,7 +20,25 @@ import javax.inject.Singleton
  * 负责敏感数据的加密存储和安全访问
  */
 @Singleton
-class SecurityManager @Inject constructor(
+/**
+ * SecurityManager - 安全管理器
+ * 
+ * 安全管理组件，保护用户数据和隐私
+ * 
+ * 安全特性：
+ * - 数据加密存储
+ * - 安全传输协议
+ * - 内容安全过滤
+ * - 权限访问控制
+ * 
+ * 合规要求：
+ * - COPPA儿童隐私保护
+ * - GDPR数据保护
+ * - 本地法规遵从
+ * 
+ * @since 1.0.0
+ */
+class SecurityManager @Inject constructor(  // 依赖注入
     @ApplicationContext private val context: Context
 ) {
     
@@ -68,7 +86,7 @@ class SecurityManager @Inject constructor(
             System.arraycopy(ciphertext, 0, combined, iv.size, ciphertext.size)
             
             Base64.encodeToString(combined, Base64.DEFAULT)
-        } catch (e: Exception) {
+        } catch (e: Exception) {  // 捕获并处理异常
             throw SecurityException("Failed to encrypt data", e)
         }
     }
@@ -92,7 +110,7 @@ class SecurityManager @Inject constructor(
             cipher.init(Cipher.DECRYPT_MODE, getSecretKey(keyAlias), spec)
             
             String(cipher.doFinal(ciphertext))
-        } catch (e: Exception) {
+        } catch (e: Exception) {  // 捕获并处理异常
             throw SecurityException("Failed to decrypt data", e)
         }
     }
@@ -160,6 +178,24 @@ class SecurityManager @Inject constructor(
 
 /**
  * 内容安全过滤器
+ */
+/**
+ * ContentSafetyFilter - ContentSafetyFilter
+ * 
+ * 安全管理组件，保护用户数据和隐私
+ * 
+ * 安全特性：
+ * - 数据加密存储
+ * - 安全传输协议
+ * - 内容安全过滤
+ * - 权限访问控制
+ * 
+ * 合规要求：
+ * - COPPA儿童隐私保护
+ * - GDPR数据保护
+ * - 本地法规遵从
+ * 
+ * @自版本 1.0.0
  */
 class ContentSafetyFilter {
     

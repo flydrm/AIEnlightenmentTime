@@ -2,7 +2,7 @@ package com.enlightenment.ai.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
-// Warm theme colors as per design
+// Warm 主题 colors as per design
 val PrimaryRed = Color(0xFFE53935)
 val SoftRed = Color(0xFFEF5350)
 val CreamBackground = Color(0xFFFFF8E1)

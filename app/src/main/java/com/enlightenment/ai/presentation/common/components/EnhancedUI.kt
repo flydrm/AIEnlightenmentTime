@@ -28,7 +28,7 @@ import com.enlightenment.ai.presentation.theme.SecondaryColor
  * 增强的按钮组件 - 带触觉反馈和动画
  */
 @Composable
-fun EnhancedButton(
+fun EnhancedButton(  // 可组合UI组件
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
@@ -106,7 +106,7 @@ fun EnhancedButton(
  * 增强的卡片组件 - 带悬浮效果
  */
 @Composable
-fun EnhancedCard(
+fun EnhancedCard(  // 可组合UI组件
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
     content: @Composable ColumnScope.() -> Unit
@@ -147,7 +147,7 @@ fun EnhancedCard(
  * 进度指示器 - 儿童友好设计
  */
 @Composable
-fun ChildFriendlyProgressBar(
+fun ChildFriendlyProgressBar(  // 可组合UI组件
     progress: Float,
     modifier: Modifier = Modifier
 ) {
@@ -191,7 +191,7 @@ fun ChildFriendlyProgressBar(
  * 成就徽章组件
  */
 @Composable
-fun AchievementBadge(
+fun AchievementBadge(  // 可组合UI组件
     title: String,
     description: String,
     isUnlocked: Boolean,
@@ -244,7 +244,7 @@ fun AchievementBadge(
  * 空状态提示组件
  */
 @Composable
-fun EmptyStateView(
+fun EmptyStateView(  // 可组合UI组件
     message: String,
     emoji: String = "🎈",
     actionText: String? = null,

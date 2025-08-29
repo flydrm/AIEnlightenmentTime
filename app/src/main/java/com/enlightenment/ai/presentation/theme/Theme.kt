@@ -31,11 +31,11 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun AIEnlightenmentTimeTheme(
+fun AIEnlightenmentTimeTheme(  // 可组合UI组件
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit
 ) {
-    // For kids app, we always use light theme
+    // For kids app, we always use light 主题
     val colorScheme = LightColorScheme
     
     val view = LocalView.current

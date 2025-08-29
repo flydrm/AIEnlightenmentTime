@@ -34,7 +34,24 @@ import javax.inject.Inject
  * @author AI启蒙时光团队
  * @since 1.0.0
  */
-class GenerateStoryUseCase @Inject constructor(
+/**
+ * GenerateStoryUseCase - GenerateStory用例
+ * 
+ * 业务用例类，封装特定的业务操作流程
+ * 
+ * 用例职责：
+ * - 协调多个仓库的数据操作
+ * - 实现复杂的业务规则
+ * - 保证业务事务的一致性
+ * 
+ * 设计原则：
+ * - 单一职责原则
+ * - 与UI层解耦
+ * - 可测试性设计
+ * 
+ * @since 1.0.0
+ */
+class GenerateStoryUseCase @Inject constructor(  // 依赖注入
     private val storyRepository: StoryRepository,
     private val profileRepository: ProfileRepository
 ) {
@@ -50,8 +67,8 @@ class GenerateStoryUseCase @Inject constructor(
      * - 年龄默认：4岁（中间值）
      * - 兴趣默认：空列表（生成通用故事）
      * 
-     * @param theme 故事主题，可选。如"恐龙冒险"、"太空探索"等
-     * @return Result<Story> 成功返回故事对象，失败返回错误信息
+     * @param 主题 故事主题，可选。如"恐龙冒险"、"太空探索"等
+     * @return Result<故事> 成功返回故事对象，失败返回错误信息
      * 
      * 示例：
      * ```kotlin
